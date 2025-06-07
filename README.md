@@ -36,7 +36,11 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install shiprocket-typescript-sdk@1.0.0 --save
+npm install akianonymus/shiprocket-typescript-sdk --save
+```
+
+```
+pnpm install akianonymus/shiprocket-typescript-sdk --save
 ```
 
 _unPublished (not recommended):_
