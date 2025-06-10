@@ -1,19 +1,19 @@
-# V1ExternalInventoryGet200Response
+# GetAllReturnOrders200Response
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**Array&lt;V1ExternalInventoryGet200ResponseDataInner&gt;**](V1ExternalInventoryGet200ResponseDataInner.md) |  | [default to undefined]
+**data** | [**Array&lt;GetAllReturnOrders200ResponseDataInner&gt;**](GetAllReturnOrders200ResponseDataInner.md) |  | [default to undefined]
 **meta** | [**GetAllReturnOrders200ResponseMeta**](GetAllReturnOrders200ResponseMeta.md) |  | [default to undefined]
 
 ## Example
 
 ```typescript
-import { V1ExternalInventoryGet200Response } from './api';
+import { GetAllReturnOrders200Response } from './api';
 
-const instance: V1ExternalInventoryGet200Response = {
+const instance: GetAllReturnOrders200Response = {
     data,
     meta,
 };

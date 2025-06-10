@@ -1,19 +1,19 @@
-# V1ExternalNdrAWBGet200Response
+# GetAllOrders200Response
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**Array&lt;V1ExternalNdrAWBGet200ResponseDataInner&gt;**](V1ExternalNdrAWBGet200ResponseDataInner.md) |  | [default to undefined]
+**data** | [**Array&lt;GetAllOrders200ResponseDataInner&gt;**](GetAllOrders200ResponseDataInner.md) |  | [default to undefined]
 **meta** | [**GetAllOrders200ResponseMeta**](GetAllOrders200ResponseMeta.md) |  | [default to undefined]
 
 ## Example
 
 ```typescript
-import { V1ExternalNdrAWBGet200Response } from './api';
+import { GetAllOrders200Response } from './api';
 
-const instance: V1ExternalNdrAWBGet200Response = {
+const instance: GetAllOrders200Response = {
     data,
     meta,
 };

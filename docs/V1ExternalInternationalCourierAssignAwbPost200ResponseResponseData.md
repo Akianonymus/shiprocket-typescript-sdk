@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **order_id** | **number** |  | [default to undefined]
 **shipment_id** | **number** |  | [default to undefined]
 **awb_code_status** | **number** |  | [default to undefined]
-**assigned_date_time** | [**V1ExternalShipmentsGet200ResponseDataCreatedAt**](V1ExternalShipmentsGet200ResponseDataCreatedAt.md) |  | [default to undefined]
+**assigned_date_time** | [**GetSpecificShipmentDetails200ResponseDataCreatedAt**](GetSpecificShipmentDetails200ResponseDataCreatedAt.md) |  | [default to undefined]
 **applied_weight** | **number** |  | [default to undefined]
 **company_id** | **number** |  | [default to undefined]
 **courier_name** | **string** |  | [default to undefined]

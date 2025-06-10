@@ -1,20 +1,18 @@
-# V1ExternalInternationalOrdersTrackGet200ResponseMeta
+# GetAllOrders200ResponseMeta
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**counts** | [**V1ExternalInternationalOrdersTrackGet200ResponseMetaCounts**](V1ExternalInternationalOrdersTrackGet200ResponseMetaCounts.md) |  | [default to undefined]
 **pagination** | [**GetAllOrders200ResponseMetaPagination**](GetAllOrders200ResponseMetaPagination.md) |  | [default to undefined]
 
 ## Example
 
 ```typescript
-import { V1ExternalInternationalOrdersTrackGet200ResponseMeta } from './api';
+import { GetAllOrders200ResponseMeta } from './api';
 
-const instance: V1ExternalInternationalOrdersTrackGet200ResponseMeta = {
-    counts,
+const instance: GetAllOrders200ResponseMeta = {
     pagination,
 };
 ```

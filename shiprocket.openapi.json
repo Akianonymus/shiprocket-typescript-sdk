@@ -12,6 +12,7 @@
         "summary": "Generate Token",
         "deprecated": false,
         "description": "",
+        "operationId": "generateToken",
         "tags": [],
         "parameters": [],
         "requestBody": {
@@ -78,6 +79,10 @@
                     "last_name",
                     "token"
                   ]
+                },
+                "example": {
+                  "message": "Invalid email and password combination",
+                  "status_code": 403
                 }
               }
             },
@@ -119,29 +124,9 @@
         "summary": "Token Logout",
         "deprecated": false,
         "description": "[https://apiv2.shiprocket.in/v1/external/auth/logout](https://apiv2.shiprocket.in/v1/external/auth/logout)",
+        "operationId": "logout",
         "tags": [],
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "application/json",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "Bearer xxx",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -165,9 +150,10 @@
     },
     "/v1/external/orders/create/adhoc": {
       "post": {
-        "summary": "Create Custom Order",
+        "summary": "Create Custom Order ",
         "deprecated": false,
-        "description": "Use this API to create a quick custom order. Quick orders are the ones where we do not store the product details in the master catalogue.\n\nYou have to pass all the required params at the minimum to create a quick custom order. You can add additional parameters as per your preference.\n\n**Note:**\n\n- In case the 'shipping_is_billing' field is false, further shipping detail fields are required.\n    \n\nIf no channel id is passed, the order will be assigned to the default custom channel. If the channel id is not known, use the 'Get All Channels' API to get the list of all integrated channels in your Shiprocket account.\n\n- order_id field cannot be equal to an already existing id. Doing so does not change or affect the existing order.\n    \n- New orders cannot be created with order id's same as that of cancelled orders. If error 422 shows up despite filling in the correct details, consider changing the order_id.\n    \n- Be sure to input the correct calculated sub_total amount. The total is not calculated automatically through the API.\n    \n- The 'order_id' returned in the response is the Shiprocket order_id. Please save this order ID as we will use this in future API calls.\n    \n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `order_id` | YES | _string_ | The order id you want to specify to the order. Max char: 50. (Avoid passing character values as this contradicts some other API calls). | 224477 or 224-477 |\n| `order_date` | YES | _string_ | The date of order creation in yyyy-mm-dd format. Time is additional. | 2019-07-24 11:11 |\n| `pickup_location` | YES | _string_ | The name of the pickup location added in your Shiprocket account. This cannot be a new location. | Jammu |\n| `channel_id` | NO | _integer_ | Mention this in case you need to assign the order to a particular channel. Deafult is 'Custom'. | 27022 |\n| `comment` | NO | _string_ | Option to add 'From' field to the shipment. To do this, enter the name in the following format: 'Reseller: \\[name\\]'. | Reseller: Divine |\n| `reseller_name` | NO | _string_ | The 'from' name if you want to print. Use 'Reseller: \\[name\\]' | Reseller: Divine |\n| `company_name` | NO | _string_ | Name of the company. | Amazon |\n| `billing_customer_name` | YES | _string_ | First name of the billed customer. | John |\n| `billing_last_name` | NO | _string_ | Last name of the billed customer. | Doe |\n| `billing_address` | YES | _string_ | address details of the billed customer. | Civil line, House 20 |\n| `billing_address_2` | NO | _string_ | Further address details of the billed customer. | Near Hokage House |\n| `billing_city` | YES | _string_ | Billing address city. Max char: 30. | New Delhi |\n| `billing_pincode` | YES | _integer_ | Pincode of the billing address. | 110002 |\n| `billing_state` | YES | _string_ | Billing address state. | Delhi |\n| `billing_country` | YES | _string_ | Billing address country. | India |\n| `billing_email` | YES | _string_ | Email address of the billed customer. | [John@doe.com](https://mailto:John@doe.com) |\n| `billing_phone` | YES | _integer_ | The phone number of the billing customer. | 9856321472 |\n| `billing_alternate_phone` | NO | _integer_ | Alternate phone number of the billing customer. | 8604690454 |\n| `shipping_is_billing` | YES | _boolean_ | Whether the shipping address is the same as billing address. 1 or 'true' for yes and 0 or 'false' for no. | true |\n| `shipping_customer_name` | CONDITIONAL YES | _string_ | Name of the customer the order is shipped to. Required in case billing is not same as shipping. | Jane |\n| `shipping_last_name` | NO | _string_ | Last name of the shipping customer. | Doe |\n| `shipping_address` | CONDITIONAL YES | _string_ | Address of the Shipping customer. Required in case billing is not same as shipping. | Lane number 69 |\n| `shipping_address_2` | NO | _string_ | Further address details of shipping customer. | Andheri |\n| `billing_isd_code` | NO | _string_ | ISD code of the billing address. | +91 |\n| `shipping_city` | CONDITIONAL YES | _string_ | Shipping address city. | Mumbai |\n| `shipping_pincode` | CONDITIONAL YES | _integer_ | Shipping address pincode. | 200912 |\n| `shipping_country` | CONDITIONAL YES | _string_ | Shipping address country. | India |\n| `shipping_state` | CONDITIONAL YES | _string_ | Shipping address state. | Maharashtra |\n| `shipping_email` | NO | _string_ | Email of the shipping customer. | [Jane@doe.com](https://mailto:Jane@doe.com) |\n| `shipping_phone` | CONDITIONAL YES | _integer_ | Phone no. of the shipping customer. |  |\n| `longitude` | YES | _float_ | Delivery Longitude. Mandatory in case of Hyper local shipments | 77.06745147705078 |\n| `latitude` | YES | _float_ | Delivery Latitude. Mandatory in case of Hyper local shipments | 28.50724220275879 |\n| `order_items` | YES | / | List of items and their relevant fields in the form of Array. | / |\n| `name` | YES | _string_ | Name of the product. | Jeans |\n| `sku` | YES | _string_ | The sku id of the product. | cbs123 |\n| `units` | YES | _integer_ | No of units that are to be shipped. | 10 |\n| `selling_price` | YES | _integer_ | The selling price per unit in Rupee. Inclusive of GST. | 900 |\n| `discount` | NO | _integer_ | The discount amount in Rupee. Inclusive of tax. | 10 |\n| `tax` | NO | _integer_ | The tax percentage on the item. | 5 |\n| `hsn` | NO | _integer_ | Harmonised System Nomenclature code. Used to determine the category of taxation the goods fall under. | 44122 |\n| `payment_method` | YES | _string_ | The method of payment. Can be either COD (Cash on delivery) Or Prepaid. | COD |\n| `shipping_charges` | NO | _integer_ | Shipping charges if any in Rupee. | 5 |\n| `giftwrap_charges` | NO | _integer_ | Giftwrap charges if any in Rupee. | 5 |\n| `transaction_charges` | NO | _integer_ | Transaction charges if any in Rupee. | 5 |\n| `total_discount` | NO | _integer_ | The total discount amount in Rupee. | 15 |\n| `sub_total` | YES | _integer_ | Calculated sub total amount in Rupee after deductions. | 9010 |\n| `length` | YES | _float_ | The length of the item in cms. Must be more than 0.5. | 10 |\n| `breadth` | YES | _float_ | The breadth of the item in cms. Must be more than 0.5. | 10 |\n| `height` | YES | _float_ | The height of the item in cms. Must be more than 0.5. | 10 |\n| `weight` | YES | _float_ | The weight of the item in kgs. Must be more than 0. | 2.5 |\n| `ewaybill_no` | NO | _string_ | Details relating to the shipment of goods. . | K92373490 |\n| `customer_gstin` | NO | _string_ | Goods and Services Tax Identification Number. | 29ABCDE1234F2Z5 |\n| `invoice_number` | NO | _string_ |  |  |\n| `order_type` | NO | _string_ | Key to differentiate between Essentials or Non Essentials Shipments. Order type can only be ESSENTIALS or NON ESSENTIALS. Please note it is case sensitive and blank values are allowed. | ESSENTIALS |\n| `checkout_shipping_method` | NO | _string_ | Only for SRF users. | a. SR_RUSH: SDD, NDD  <br>b. SR_STANDARD: Surface Delivery  <br>c. SR_EXPRESS: Air Delivery  <br>d. SR_QUICK: 3 hrs delivery |\n| `what3words_address` | NO | _string_ | What3words is a proprietary geocode system designed to identify any location on the surface of Earth with a resolution of about 3 meters. The system encodes geographic coordinates into three permanently fixed dictionary words. | toddler.geologist.animated |\n| `is_insurance_opt` | NO | _boolean_ | To secure shipments above the order value of Rs 2500 | true |\n| `is_document` | NO | _integer_ | To create a document order | 1 or 0 |\n| `shipping_method` | YES | _string_ | Shipping method use HL in case of Hyper local shipments | HL |",
+        "description": "Use this API to create a quick custom order. Quick orders are the ones where we do not store the product details in the master catalogue.\n\nYou have to pass all the required params at the minimum to create a quick custom order. You can add additional parameters as per your preference.\n\n**Note:**\n\n- In case the 'shipping_is_billing' field is false, further shipping detail fields are required.\n    \n\nIf no channel id is passed, the order will be assigned to the default custom channel. If the channel id is not known, use the 'Get All Channels' API to get the list of all integrated channels in your Shiprocket account.\n\n- order_id field cannot be equal to an already existing id. Doing so does not change or affect the existing order.\n    \n- New orders cannot be created with order id's same as that of cancelled orders. If error 422 shows up despite filling in the correct details, consider changing the order_id.\n    \n- Be sure to input the correct calculated sub_total amount. The total is not calculated automatically through the API.\n    \n- The 'order_id' returned in the response is the Shiprocket order_id. Please save this order ID as we will use this in future API calls.\n    \n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `order_id` | YES | _string_ | The order id you want to specify to the order. Max char: 50. (Avoid passing character values as this contradicts some other API calls). | 224477 or 224-477 |\n| `order_date` | YES | _string_ | The date of order creation in yyyy-mm-dd format. Time is additional. | 2019-07-24 11:11 |\n| `pickup_location` | YES | _string_ | The name of the pickup location added in your Shiprocket account. This cannot be a new location. | Jammu |\n| `channel_id` | NO | _integer_ | Mention this in case you need to assign the order to a particular channel. Default is 'Custom'. | 27022 |\n| `comment` | NO | _string_ | Option to add 'From' field to the shipment. To do this, enter the name in the following format: 'Reseller: \\[name\\]'. | Reseller: Divine |\n| `reseller_name` | NO | _string_ | The 'from' name if you want to print. Use 'Reseller: \\[name\\]' | Reseller: Divine |\n| `company_name` | NO | _string_ | Name of the company. | Amazon |\n| `billing_customer_name` | YES | _string_ | First name of the billed customer. | John |\n| `billing_last_name` | NO | _string_ | Last name of the billed customer. | Doe |\n| `billing_address` | YES | _string_ | address details of the billed customer. | Civil line, House 20 |\n| `billing_address_2` | NO | _string_ | Further address details of the billed customer. | Near Hokage House |\n| `billing_city` | YES | _string_ | Billing address city. Max char: 30. | New Delhi |\n| `billing_pincode` | YES | _integer_ | Pincode of the billing address. | 110002 |\n| `billing_state` | YES | _string_ | Billing address state. | Delhi |\n| `billing_country` | YES | _string_ | Billing address country. | India |\n| `billing_email` | YES | _string_ | Email address of the billed customer. | [John@doe.com](https://mailto:John@doe.com) |\n| `billing_phone` | YES | _integer_ | The phone number of the billing customer. | 9856321472 |\n| `billing_alternate_phone` | NO | _integer_ | Alternate phone number of the billing customer. | 8604690454 |\n| `shipping_is_billing` | YES | _boolean_ | Whether the shipping address is the same as billing address. 1 or 'true' for yes and 0 or 'false' for no. | true |\n| `shipping_customer_name` | CONDITIONAL YES | _string_ | Name of the customer the order is shipped to. Required in case billing is not same as shipping. | Jane |\n| `shipping_last_name` | NO | _string_ | Last name of the shipping customer. | Doe |\n| `shipping_address` | CONDITIONAL YES | _string_ | Address of the Shipping customer. Required in case billing is not same as shipping. | Lane number 69 |\n| `shipping_address_2` | NO | _string_ | Further address details of shipping customer. | Andheri |\n| `billing_isd_code` | NO | _string_ | ISD code of the billing address. | +91 |\n| `shipping_city` | CONDITIONAL YES | _string_ | Shipping address city. | Mumbai |\n| `shipping_pincode` | CONDITIONAL YES | _integer_ | Shipping address pincode. | 200912 |\n| `shipping_country` | CONDITIONAL YES | _string_ | Shipping address country. | India |\n| `shipping_state` | CONDITIONAL YES | _string_ | Shipping address state. | Maharashtra |\n| `shipping_email` | NO | _string_ | Email of the shipping customer. | [Jane@doe.com](https://mailto:Jane@doe.com) |\n| `shipping_phone` | CONDITIONAL YES | _integer_ | Phone no. of the shipping customer. |  |\n| `longitude` | NO | _float_ | Destination (Shipping address) Longitude. | 69.0747 |\n| `latitude` | NO | _float_ | Destination (Shipping address) Latitude | 22.4064 |\n| `order_items` | YES | / | List of items and their relevant fields in the form of Array. | / |\n| `name` | YES | _string_ | Name of the product. | Jeans |\n| `sku` | YES | _string_ | The sku id of the product. | cbs123 |\n| `units` | YES | _integer_ | No of units that are to be shipped. | 10 |\n| `selling_price` | YES | _integer_ | The selling price per unit in Rupee. Inclusive of GST. | 900 |\n| `discount` | NO | _integer_ | The discount amount in Rupee. Inclusive of tax. | 10 |\n| `tax` | NO | _integer_ | The tax percentage on the item. | 5 |\n| `hsn` | NO | _integer_ | Harmonised System Nomenclature code. Used to determine the category of taxation the goods fall under. | 44122 |\n| `payment_method` | YES | _string_ | The method of payment. Can be either COD (Cash on delivery) Or Prepaid. | COD |\n| `shipping_charges` | NO | _integer_ | Shipping charges if any in Rupee. | 5 |\n| `giftwrap_charges` | NO | _integer_ | Giftwrap charges if any in Rupee. | 5 |\n| `transaction_charges` | NO | _integer_ | Transaction charges if any in Rupee. | 5 |\n| `total_discount` | NO | _integer_ | The total discount amount in Rupee. | 15 |\n| `sub_total` | YES | _integer_ | Calculated sub total amount in Rupee after deductions. | 9010 |\n| `length` | YES | _float_ | The length of the item in cms. Must be more than 0.5. | 10 |\n| `breadth` | YES | _float_ | The breadth of the item in cms. Must be more than 0.5. | 10 |\n| `height` | YES | _float_ | The height of the item in cms. Must be more than 0.5. | 10 |\n| `weight` | YES | _float_ | The weight of the item in kgs. Must be more than 0. | 2.5 |\n| `ewaybill_no` | NO | _string_ | Details relating to the shipment of goods. . | K92373490 |\n| `customer_gstin` | NO | _string_ | Goods and Services Tax Identification Number. | 29ABCDE1234F2Z5 |\n| `invoice_number` | NO | _string_ |  |  |\n| `order_type` | NO | _string_ | Key to differentiate between Essentials or Non Essentials Shipments. Order type can only be ESSENTIALS or NON ESSENTIALS. Please note it is case sensitive and blank values are allowed. | ESSENTIALS |\n| `checkout_shipping_method` | NO | _string_ | Only for SRF users. | a. SR_RUSH: SDD, NDD  <br>b. SR_STANDARD: Surface Delivery  <br>c. SR_EXPRESS: Air Delivery  <br>d. SR_QUICK: 3 hrs delivery |\n| `what3words_address` | NO | _string_ | What3words is a proprietary geocode system designed to identify any location on the surface of Earth with a resolution of about 3 meters. The system encodes geographic coordinates into three permanently fixed dictionary words. | toddler.geologist.animated |\n| `is_insurance_opt` | NO | _boolean_ | To secure shipments above the order value of Rs 2500 | true |\n| `is_document` | NO | _integer_ | To create a document order | 1 or 0 |\n| `order_tag` | NO | _string_ | To add tags to your orders | abc, xyz |\n| `is_insurance_opt` | NO | _boolean_ | To opt in or out of insurance | true or false |",
+        "operationId": "createCustomerOrder",
         "tags": [],
         "parameters": [],
         "requestBody": {
@@ -176,7 +162,62 @@
               "schema": {
                 "type": "string"
               },
-              "example": "{\n    \"order_id\": \"\",\n    \"order_date\": \"\",\n    \"pickup_location\": \"\",\n    \"channel_id\": \"\",\n    \"comment\": \"\",\n    \"reseller_name\": \"\",\n    \"company_name\": \"\",\n    \"billing_customer_name\": \"\",\n    \"billing_last_name\": \"\",\n    \"billing_address\": \"\",\n    \"billing_address_2\": \"\",\n    \"billing_isd_code\": \"\",\n    \"billing_city\": \"\",\n    \"billing_pincode\": \"\",\n    \"billing_state\": \"\",\n    \"billing_country\": \"\",\n    \"billing_email\": \"\",\n    \"billing_phone\": \"\",\n    \"billing_alternate_phone\":\"\",\n    \"shipping_is_billing\": \"\",\n    \"shipping_customer_name\": \"\",\n    \"shipping_last_name\": \"\",\n    \"shipping_address\": \"\",\n    \"shipping_address_2\": \"\",\n    \"shipping_city\": \"\",\n    \"shipping_pincode\": \"\",\n    \"shipping_country\": \"\",\n    \"shipping_state\": \"\",\n    \"shipping_email\": \"\",\n    \"shipping_phone\": \"\",\n    \"order_items\": [\n        {\n            \"name\": \"\",\n            \"sku\": \"\",\n            \"units\": \"\",\n            \"selling_price\": \"\",\n            \"discount\": \"\",\n            \"tax\": \"\",\n            \"hsn\": \"\"\n        }\n    ],\n    \"payment_method\": \"\",\n    \"shipping_charges\": \"\",\n    \"giftwrap_charges\": \"\",\n    \"transaction_charges\": \"\",\n    \"total_discount\": \"\",\n    \"sub_total\": \"\",\n    \"length\": \"\",\n    \"breadth\": \"\",\n    \"height\": \"\",\n    \"weight\": \"\",\n    \"ewaybill_no\": \"\",\n    \"customer_gstin\": \"\",\n    \"invoice_number\":\"\",\n    \"order_type\":\"\",\n}"
+              "example": {
+                "order_id": "",
+                "order_date": "",
+                "pickup_location": "",
+                "comment": "",
+                "reseller_name": "",
+                "company_name": "",
+                "billing_customer_name": "",
+                "billing_last_name": "",
+                "billing_address": "",
+                "billing_address_2": "",
+                "billing_isd_code": "",
+                "billing_city": "",
+                "billing_pincode": "",
+                "billing_state": "",
+                "billing_country": "",
+                "billing_email": "",
+                "billing_phone": "",
+                "billing_alternate_phone": "",
+                "shipping_is_billing": "",
+                "shipping_customer_name": "",
+                "shipping_last_name": "",
+                "shipping_address": "",
+                "shipping_address_2": "",
+                "shipping_city": "",
+                "shipping_pincode": "",
+                "shipping_country": "",
+                "shipping_state": "",
+                "shipping_email": "",
+                "shipping_phone": "",
+                "order_items": [
+                  {
+                    "name": "",
+                    "sku": "",
+                    "units": "",
+                    "selling_price": "",
+                    "discount": "",
+                    "tax": "",
+                    "hsn": ""
+                  }
+                ],
+                "payment_method": "",
+                "shipping_charges": "",
+                "giftwrap_charges": "",
+                "transaction_charges": "",
+                "total_discount": "",
+                "sub_total": "",
+                "length": "",
+                "breadth": "",
+                "height": "",
+                "weight": "",
+                "ewaybill_no": "",
+                "customer_gstin": "",
+                "invoice_number": "",
+                "order_type": ""
+              }
             }
           }
         },
@@ -1647,9 +1688,9 @@
     },
     "/v1/external/courier/assign/awb": {
       "post": {
-        "summary": "Generate AWB for Shipment",
+        "summary": "Generate AWB for Return Shipment",
         "deprecated": false,
-        "description": "This API can be used to assign the AWB (Air Waybill Number) to your shipment. The AWB is a unique number that helps you track the shipment and get details about it.\n\n#### Parameters:\n\n|  **PARAMS** \t| **REQUIRED** \t|  **DATA TYPE** \t|                                                     **DESCRIPTION**                                                    \t| **EXAMPLE** \t|\n|:-----------:\t|:------------:\t|:--------------:\t|:----------------------------------------------------------------------------------------------------------------------:\t|:-----------:\t|\n| `shipment_id` \t|      YES     \t|    *integer*   \t|                              The shipment id of the order you want to create the AWB for.                               \t|   16016920  \t|\n|  `courier_id` \t|      NO      \t|    *integer*   \t|  The courier id of the courier service you want to select. The default courier is selected in case no id is specified. \t|      10     \t|\n|    `status`   \t|      NO      \t|    *string*    \t|     Use this to change the courier of a shipment. Value: reassign.  Note that this can be done only once in 24 hours.   \t|   reassign  \t|",
+        "description": "This API can be used to assign the AWB (Air Waybill Number) to your shipment. The AWB is a unique number that helps you track the shipment and get details about it.\n\n#### Parameters:\n\n|  **PARAMS** \t| **REQUIRED** \t|  **DATA TYPE** \t|                                                     **DESCRIPTION**                                                    \t| **EXAMPLE** \t|\n|:-----------:\t|:------------:\t|:--------------:\t|:----------------------------------------------------------------------------------------------------------------------:\t|:-----------:\t|\n| `shipment_id` \t|      YES     \t|    *integer*   \t|                              The shipment id of the order you want to create the AWB of.                               \t|   16016920  \t|\n|  `courier_id` \t|      NO      \t|    *integer*   \t|  The courier id of the courier service you want to select. The default courier is selected in case no id is specified. \t|      10     \t|\n|    `status`   \t|      NO      \t|    *string*    \t|     Use this to change the courier of a shipment. Value: reassign  Note that this can be done only once in 24 hours.   \t|   reassign  \t|\n|\t`is_return`\t\t|\t   YES\t\t|\t *integer*\t\t|\tWhether the order is return order or not. 1 in case of Yes and 0 for No.\t\t\t\t\t\t\t\t\t\t\t\t|\t\t1\t\t|",
         "tags": [],
         "parameters": [],
         "requestBody": {
@@ -1661,7 +1702,8 @@
               "example": {
                 "shipment_id": "",
                 "courier_id": "",
-                "status": ""
+                "status": "",
+                "is_return": ""
               }
             }
           }
@@ -1674,81 +1716,6 @@
                 "schema": {
                   "type": "object",
                   "properties": {}
-                },
-                "example": "{\"success\" => true, \"message\" => \"We are processing your request\"}"
-              }
-            },
-            "headers": {}
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "status_code": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "status_code"
-                  ]
-                },
-                "example": {
-                  "message": "Oops! Cannot reassign courier for this shipment.",
-                  "status_code": 400
-                }
-              }
-            },
-            "headers": {}
-          },
-          "422": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "errors": {
-                      "type": "object",
-                      "properties": {
-                        "shipment_id": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "required": [
-                        "shipment_id"
-                      ]
-                    },
-                    "status_code": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "errors",
-                    "status_code"
-                  ]
-                },
-                "example": {
-                  "message": "Required field missing",
-                  "errors": {
-                    "shipment_id": [
-                      "The shipment id field is required."
-                    ]
-                  },
-                  "status_code": 422
                 }
               }
             },
@@ -2296,7 +2263,7 @@
       "get": {
         "summary": "Check Courier Serviceability",
         "deprecated": false,
-        "description": "Use this API to check the availability of couriers between the pickup and delivery postal codes.  \nFurther details like the estimated time of delivery, the rates along with the ids are also shown.\n\n**Note:**\n\n- One of either the 'order_id' or 'cod' and 'weight' is required. If you specify the order id, the cod and weight fields are not required and vice versa.\n    \n- You can add further fields to add the shipment details and filter the search.\n    \n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `pickup_postcode` | YES | _integer_ | Postcode from where the order will be picked. | 110030 |\n| `delivery_postcode` | YES | _integer_ | Postcode where the order will be delivered | 122002 |\n| `order_id` | NO | _integer_ | If order id is already created in Shiprocket panel then you can use this shiprocket order id in servicibility | 123456 |\n| `cod` | CONDITIONAL YES | _boolean_ | 1 for Cash on Delivery and 0 for Prepaid orders. | 1 |\n| `is_new_hyperlocal` | YES | _boolean_ | 1 in case of hyper-local shipments | 1 |\n| `lat_from` | YES | _float_ | Pickup Latitude. Mandatory in case of Hyper local shipments | 28.509223937988 |\n| `long_from` | YES | _float_ | Pickup Longitude. Mandatory in case of Hyper local shipments | 77.067848205566 |\n| `lat_to` | YES | _float_ | Delivery Latitude. Mandatory in case of Hyper local shipments | 28.50724220275879 |\n| `long_to` | YES | _float_ | Delivery Longitude. Mandatory in case of Hyper local shipments | 77.06745147705078 |",
+        "description": "Use this API to check the availability of couriers between the pickup and delivery postal codes.  \nFurther details like the estimated time of delivery, the rates along with the ids are also shown.\n\n**Note:**\n\n- One of either the 'order_id' or 'cod' and 'weight' is required. If you specify the order id, the cod and weight fields are not required and vice versa.\n    \n- You can add further fields to add the shipment details and filter the search.\n    \n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `pickup_postcode` | YES | _integer_ | The shipment id of the order you want to create the AWB of. | 16016920 |\n| `delivery_postcode` | YES | _integer_ | The courier id of the courier service you want to select. The default courier is selected in case no id is specified. | 10 |\n| `order_id` | CONDITIONAL YES | _integer_ | Use this to change the courier of a shipment. Value: reassign Note that this can be done only once in 24 hours. | reassign |\n| `cod` | CONDITIONAL YES | _boolean_ | 1 for Cash on Delivery and 0 for Prepaid orders. | 1 |\n| `weight` | CONDITIONAL YES | _string_ | The weight of shipment in kgs. | 2 |\n| `length` | NO | _integer_ | The length of the shipment in cms. | 15 |\n| `breadth` | NO | _integer_ | The breadth of the shipment in cms. | 10 |\n| `height` | NO | _integer_ | The height of the shipment in cms. | 5 |\n| `declared_value` | NO | _integer_ | The price of the order shipment rupee. | 50 |\n| `mode` | NO | _string_ | The mode of travel. Either: Surface or Air | Air |\n| `is_return` | YES | _integer_ | Whether the order is return order or not. 1 in case of Yes and 0 for No | 1 |\n| `qc_check` | NO | _integer_ | Filter out QC couriers from the serviceability list | 1 |",
         "tags": [],
         "parameters": [
           {
@@ -2317,132 +2284,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "boolean"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "courier_name": {
-                            "type": "string"
-                          },
-                          "rates": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "data"
-                  ]
-                },
-                "example": {
-                  "status": true,
-                  "data": [
-                    {
-                      "courier_name": "Shiprocket Quick",
-                      "rates": "345.3"
-                    }
-                  ]
-                }
-              }
-            },
-            "headers": {}
-          },
-          "422": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "errors": {
-                      "type": "object",
-                      "properties": {
-                        "weight": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "cod": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "order_id": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "required": [
-                        "weight",
-                        "cod",
-                        "order_id"
-                      ]
-                    },
-                    "status_code": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "errors",
-                    "status_code"
-                  ]
-                },
-                "example": {
-                  "message": "Required field missing",
-                  "errors": {
-                    "weight": [
-                      "The weight field is required when order id is not present."
-                    ],
-                    "cod": [
-                      "The cod field is required when order id is not present."
-                    ],
-                    "order_id": [
-                      "The order id field is required when pickup postcode / delivery postcode / cod / weight is not present."
-                    ]
-                  },
-                  "status_code": 422
-                }
-              }
-            },
-            "headers": {}
-          },
-          "x-200:Invalid Data": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message"
-                  ]
-                },
-                "example": {
-                  "status": 404,
-                  "message": "Order does not exist!"
+                  "properties": {}
                 }
               }
             },
@@ -2626,26 +2468,117 @@
         "summary": "Get all Orders",
         "deprecated": false,
         "description": "This API call will display a list of all created and available orders in your Shiprocket account. The product and shipment details are displayed as sub-arrays within each order detail.\n\nYou can also sort and filter the data according to your needs by passing the optional parameters. Not passing anything will display the data in the default format.\n\nYou can also fetch the data based on the order update date. PFB the validations:\n\n```\n1. if updated_to => passed and updated_from not passed =>, error will come => Please send update_from date along with update_to date\n2. if updated_from => passed and updated_to => paased => and from-to > 30 then error => Difference between updated_from and update_to date should not be greater than 30 days.\n3. if updated_From < 30 then error => Updated_from date should not be less than 30 days from current date\n\n ```\n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `page` | NO | _integer_ | The page number to display. | 5 |\n| `per_page` | NO | _integer_ | The number of entries per page. | 5 |\n| `sort` | NO | _string_ | Sort conditions: ASC or DESC | ASC |\n| `sort_by` | NO | _string_ | The Field to sort by: id or status | id |\n| `to` | NO | _string_ | The end date. | 2018-07-24 |\n| `from` | NO | _string_ | The start date. | 2019-07-24 |\n| `filter_by` | NO | _string_ | Field to filter by. | status, payment_method, delivery_country, channel_order_id |\n| `filter` | NO | _string_ | Value of the field |  |\n| `search` | NO | _string_ | Search for AWB or by Channel order_id (order id specified by you). | 224477 |\n| `pickup_location` | NO | _string_ | Search Orders on the basis of pickup location. | xyz |\n| `channel_id` | NO | _integer_ | Channel ID Returned in Get Integrated Channels API | 123 |\n| `fbs` | NO | _integer_ | Use this filter if you want to view and filter the SRF orders | 0 or 1 |",
+        "operationId": "getAllOrders",
         "tags": [],
         "parameters": [
           {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "application/json",
+            "name": "sort",
+            "in": "query",
+            "description": "Sort conditions.",
+            "required": false,
+            "example": "ASC",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
+            "name": "sort_by",
+            "in": "query",
+            "description": "The field to sort by.",
+            "required": false,
+            "example": "id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "The end date.",
+            "required": false,
+            "example": "2018-07-24",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "The start date.",
+            "required": false,
+            "example": "2019-07-24",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter_by",
+            "in": "query",
+            "description": "Field to filter by.",
+            "required": false,
+            "example": "status",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "(Used with filter_by) — value to filter by.",
+            "required": false,
             "example": "",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search by AWB or channel_order_id (your order ID).",
+            "required": false,
+            "example": "224477",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pickup_location",
+            "in": "query",
+            "description": "Search orders based on pickup location.",
+            "required": false,
+            "example": "xyz",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channel_id",
+            "in": "query",
+            "description": "Channel ID returned from Get Integrated Channels API.",
+            "required": false,
+            "example": 123,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Number",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "No of records in a single requests",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
             }
           }
         ],
@@ -3446,7 +3379,11 @@
             "headers": {}
           }
         },
-        "security": []
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/v1/external/orders/show/{id}": {
@@ -3454,6 +3391,7 @@
         "summary": "Get Specific Order Details",
         "deprecated": false,
         "description": "Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.\n\nNo other body parameters are required.\n\n**Note:**\n\nFor SRF orders, you'll receive an extra parameter viz., fulfillment_status. This key will have four values:\n\n*   Ready to Pack, \n*   Packed\n*   Added to Picklist\n*   Picked up  \n    \n\n#### Path:\n\n| **EXAMPLE** |\n| --- |\n| [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |",
+        "operationId": "getSpecificOrderDetails",
         "tags": [],
         "parameters": [
           {
@@ -3461,26 +3399,6 @@
             "in": "path",
             "description": "",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "application/json",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "Bearer {token}",
             "schema": {
               "type": "string"
             }
@@ -5079,12 +4997,24 @@
         "deprecated": false,
         "description": "This API downloads and creates a CSV file of all the orders in your Shiprocket account and sends the download URL to the linked email account of the API user.\n\nThe CSV file containing is accessible via this URL.\nNo parameters are required to access this API.",
         "tags": [],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
-            "text/plain": {
+            "application/json": {
               "schema": {
-                "type": "string"
+                "type": "object",
+                "properties": {}
               },
               "example": {}
             }
@@ -6193,14 +6123,125 @@
         "summary": "Get All Return Orders",
         "deprecated": false,
         "description": "Using this API, you can get a list of all created return orders in your Shiprocket account, along with their details.\n\nNo parameters are required to use the API. However, further parameters can be defined to sort and filter the data.\n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `page` | NO | _integer_ | The page number to display. | 1 |\n| `per_page` | NO | _integer_ | The number of orders per page. | 2 |\n| `to` | NO | _string_ | Ending date of search. | 2019-08-04 |\n| `from` | NO | _string_ | Starting date of search. | 2019-08-05 |",
+        "operationId": "getAllReturnOrders",
         "tags": [],
         "parameters": [
           {
-            "name": "Content-Type",
+            "name": "sort",
+            "in": "query",
+            "description": "Sort conditions.",
+            "required": false,
+            "example": "ASC",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "The field to sort by.",
+            "required": false,
+            "example": "id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "The end date.",
+            "required": false,
+            "example": "2018-07-24",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "The start date.",
+            "required": false,
+            "example": "2019-07-24",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter_by",
+            "in": "query",
+            "description": "Field to filter by.",
+            "required": false,
+            "example": "status",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "(Used with filter_by) — value to filter by.",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search by AWB or channel_order_id (your order ID).",
+            "required": false,
+            "example": "224477",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pickup_location",
+            "in": "query",
+            "description": "Search orders based on pickup location.",
+            "required": false,
+            "example": "xyz",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channel_id",
+            "in": "query",
+            "description": "Channel ID returned from Get Integrated Channels API.",
+            "required": false,
+            "example": 123,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Number",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "No of records in a single requests",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
             "in": "header",
             "description": "",
             "required": true,
-            "example": "application/json",
+            "example": "",
             "schema": {
               "type": "string"
             }
@@ -6549,6 +6590,7 @@
         "summary": "Get Details of Specific Shipment",
         "deprecated": false,
         "description": "Get the details of a specific Shipment by passing the value of shipment_id in the endpoint URL.\nNo other body parameters are required.\n\n#### Path:\n\n|          **EXAMPLE**         \t|\n|:----------------------------:\t|\n|  https://apiv2.shiprocket.in/v1/external/shipments/16016920 \t|",
+        "operationId": "getSpecificShipmentDetails",
         "tags": [],
         "parameters": [
           {
@@ -7846,6 +7888,15 @@
         "tags": [],
         "parameters": [
           {
+            "name": "AWB",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "Content-Type",
             "in": "header",
             "description": "",
@@ -8130,7 +8181,17 @@
         "deprecated": false,
         "description": "This API will let you take actions like Reattempt and RTO on the shipments that are in NDR.\n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `action` | YES | *string* | The action needs to be specified | ‘fake-attempt’ or ‘re-attempt’ or 'return' |\n| `comments` | YES | *string* | Any comment can be mentioned | The Byer does not want the product |\n| `phone` | NO | *string* | The phone number will be updated at the time of re-attempt and fake-attempt | 9999988888 |\n| `proof_audio` | CONDITIONAL YES | *string* | URL of the audio which will be updated at the time of the fake attempt | [https://s3-ap-southeast-1.amazonaws.com/kr-multichannel/imports/ndr/1655100133_file_example_MP3_700KB.mp3](https://s3-ap-southeast-1.amazonaws.com/kr-multichannel/imports/ndr/1655100133_file_example_MP3_700KB.mp3) |\n| `proof_image` | CONDITIONAL YES | *string* | URL of the image which will be updated at the time of the fake attempt | [https://s3-ap-southeast-1.amazonaws.com/kr-multichannel/imports/ndr/img_7687678678.jpg](https://s3-ap-southeast-1.amazonaws.com/kr-multichannel/imports/ndr/img_7687678678.jpg) |\n| `remarks` | CONDITIONAL YES | *string* | Remarks will be updated at the time of a fake attempt | Delivery Requested |\n| `address1` | NO | *string* | address1 will be updated at the time of re-attempt and fake-attempt | U-56, sector-23, Noida, India |\n| `address2` | NO | *string* | addres2 will be updated at the time of re-attempt and fake-attempt | U-56, sector-23, Noida, India |\n| `deferred_date` | NO | *date(string)* | Deferred date will be updated as preferred_date at the time of fake-attempt and re-attempt | 2022-08-10 |",
         "tags": [],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "awb",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "text/plain": {
@@ -8182,6 +8243,15 @@
         "description": "Get the tracking details of your shipment by entering the AWB code of the same in the endpoint URL itself.\nNo other body parameters are required to access this API.\n\nThe response is displayed in JSON format.\n\n#### Path:\n\n|                 **EXAMPLE**                \t|\n|:------------------------------------------:\t|\n| https://apiv2.shiprocket.in/v1/external/courier/track/awb/788830567028 \t|",
         "tags": [],
         "parameters": [
+          {
+            "name": "awb_code",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "Content-Type",
             "in": "header",
@@ -8883,6 +8953,15 @@
         "description": "Get the tracking details of your shipment by entering the shipment_id of the same in the endpoint URL.\nNo other body parameters are required to access this API.\n\nThe response is displayed in JSON format.\n\n#### Path:\n\n|                 **EXAMPLE**                \t|\n|:------------------------------------------:\t|\n| https://apiv2.shiprocket.in/v1/external/courier/track/shipment/16104408 \t|",
         "tags": [],
         "parameters": [
+          {
+            "name": "shipment_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "Content-Type",
             "in": "header",
@@ -9622,7 +9701,7 @@
       "post": {
         "summary": "Add a New Pickup Location",
         "deprecated": false,
-        "description": "This API can be used to add a new pickup location to your account.  \nPass the minimum required parameters to add the location.  \nFurther details to the address can be added if required.\n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `pickup_location` | YES | _string_ | The nickname of the new pickup location. Max 36 characters. | Home |\n| `name` | YES | _string_ | The shipper's name. | Deadpool |\n| `email` | YES | _string_ | The shipper's email address. | [deadpool@chimichanga.com](https://mailto:deadpool@chimichanga.com) |\n| `phone` | YES | _integer_ | Shipper's phone number. | 9777777779 |\n| `address` | YES | _string_ | Shipper's primary address. Max 80 characters. | Mutant Facility, Sector 3 |\n| `address_2` | NO | _string_ | Additional address details. | House number 34 |\n| `city` | YES | _string_ | Pickup location city name. | Pune |\n| `state` | YES | _string_ | Pickup location state name. | Maharashtra |\n| `country` | YES | _string_ | Pickup location country. | India |\n| `pin_code` | YES | _integer_ | Pickup location pincode. | 110022 |\n| `lat` | YES | _float_ | Pickup location Latitude. | 22.4064 |\n| `long` | YES | _float_ | Pickup location Longitude. | 69.0747 |\n| `address_type` | NO | _string_ | To be given if address of different vendor is to be provided with pickup address | vendor |\n| `vendor_name` | NO | _string_ | Name of vendor if address_type is vendor | John |\n| `gstin` | NO | _string_ | gstin of vendor | 09XXXCH7409R1XXX |",
+        "description": "This API can be used to add a new pickup location to your account.  \nPass the minimum required parameters to add the location.  \nFurther details to the address can be added if required.\n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `pickup_location` | YES | _string_ | The nickname of the new pickup location. Max 36 characters. | Home |\n| `name` | YES | _string_ | The shipper's name. | Deadpool |\n| `email` | YES | _string_ | The shipper's email address. | [deadpool@chimichanga.com](mailto:deadpool@chimichanga.com) |\n| `phone` | YES | _integer_ | Shipper's phone number. | 9777777779 |\n| `address` | YES | _string_ | Shipper's primary address. Max 80 characters. | Mutant Facility, Sector 3 |\n| `address_2` | NO | _string_ | Additional address details. | House number 34 |\n| `city` | YES | _string_ | Pickup location city name. | Pune |\n| `state` | YES | _string_ | Pickup location state name. | Maharashtra |\n| `country` | YES | _string_ | Pickup location country. | India |\n| `pin_code` | YES | _integer_ | Pickup location pincode. | 110022 |\n| `lat` | NO | _float_ | Pickup location Latitude. | 22.4064 |\n| `long` | NO | _float_ | Pickup location Longitude. | 69.0747 |\n| `address_type` | NO | _string_ | To be given if address of different vendor is to be provided with pickup address | vendor |\n| `vendor_name` | NO | _string_ | Name of vendor if address_type is vendor | John |\n| `gstin` | NO | _string_ | gstin of vendor | 09XXXCH7409R1XXX  <br> |",
         "tags": [],
         "parameters": [],
         "requestBody": {
@@ -9851,1621 +9930,6 @@
                     ]
                   },
                   "status_code": 422
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
-      }
-    },
-    "/v1/external/orders/show": {
-      "get": {
-        "summary": "Get Specific Order Details",
-        "deprecated": false,
-        "description": "Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.\n\nNo other body parameters are required.\n\n**Note:**\n\nFor SRF orders, you'll receive an extra parameter viz., fulfillment_status. This key will have four values:\n\n*   Ready to Pack, \n*   Packed\n*   Added to Picklist\n*   Picked up  \n    \n\n#### Path:\n\n| **EXAMPLE** |\n| --- |\n| [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "application/json",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "Bearer {token}",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer"
-                        },
-                        "channel_id": {
-                          "type": "integer"
-                        },
-                        "channel_name": {
-                          "type": "string"
-                        },
-                        "base_channel_code": {
-                          "type": "string"
-                        },
-                        "is_international": {
-                          "type": "integer"
-                        },
-                        "is_document": {
-                          "type": "integer"
-                        },
-                        "channel_order_id": {
-                          "type": "string"
-                        },
-                        "customer_name": {
-                          "type": "string"
-                        },
-                        "customer_email": {
-                          "type": "string"
-                        },
-                        "customer_phone": {
-                          "type": "string"
-                        },
-                        "customer_address": {
-                          "type": "string"
-                        },
-                        "customer_address_2": {
-                          "type": "null"
-                        },
-                        "customer_city": {
-                          "type": "string"
-                        },
-                        "customer_state": {
-                          "type": "string"
-                        },
-                        "customer_pincode": {
-                          "type": "string"
-                        },
-                        "customer_country": {
-                          "type": "string"
-                        },
-                        "pickup_code": {
-                          "type": "string"
-                        },
-                        "pickup_location": {
-                          "type": "string"
-                        },
-                        "pickup_location_id": {
-                          "type": "string"
-                        },
-                        "pickup_id": {
-                          "type": "string"
-                        },
-                        "ship_type": {
-                          "type": "string"
-                        },
-                        "courier_mode": {
-                          "type": "string"
-                        },
-                        "currency": {
-                          "type": "string"
-                        },
-                        "country_code": {
-                          "type": "integer"
-                        },
-                        "exchange_rate_usd": {
-                          "type": "integer"
-                        },
-                        "exchange_rate_inr": {
-                          "type": "integer"
-                        },
-                        "state_code": {
-                          "type": "integer"
-                        },
-                        "payment_status": {
-                          "type": "string"
-                        },
-                        "delivery_code": {
-                          "type": "string"
-                        },
-                        "total": {
-                          "type": "integer"
-                        },
-                        "total_inr": {
-                          "type": "integer"
-                        },
-                        "total_usd": {
-                          "type": "integer"
-                        },
-                        "net_total": {
-                          "type": "string"
-                        },
-                        "other_charges": {
-                          "type": "string"
-                        },
-                        "other_discounts": {
-                          "type": "string"
-                        },
-                        "giftwrap_charges": {
-                          "type": "string"
-                        },
-                        "expedited": {
-                          "type": "integer"
-                        },
-                        "sla": {
-                          "type": "string"
-                        },
-                        "cod": {
-                          "type": "integer"
-                        },
-                        "tax": {
-                          "type": "integer"
-                        },
-                        "total_kerala_cess": {
-                          "type": "string"
-                        },
-                        "discount": {
-                          "type": "integer"
-                        },
-                        "status": {
-                          "type": "string"
-                        },
-                        "sub_status": {
-                          "type": "null"
-                        },
-                        "status_code": {
-                          "type": "integer"
-                        },
-                        "master_status": {
-                          "type": "string"
-                        },
-                        "payment_method": {
-                          "type": "string"
-                        },
-                        "purpose_of_shipment": {
-                          "type": "integer"
-                        },
-                        "channel_created_at": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string"
-                        },
-                        "order_date": {
-                          "type": "string"
-                        },
-                        "updated_at": {
-                          "type": "string"
-                        },
-                        "products": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "integer"
-                              },
-                              "order_id": {
-                                "type": "integer"
-                              },
-                              "product_id": {
-                                "type": "integer"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "sku": {
-                                "type": "string"
-                              },
-                              "description": {
-                                "type": "string"
-                              },
-                              "channel_order_product_id": {
-                                "type": "string"
-                              },
-                              "channel_sku": {
-                                "type": "string"
-                              },
-                              "hsn": {
-                                "type": "string"
-                              },
-                              "model": {
-                                "type": "null"
-                              },
-                              "manufacturer": {
-                                "type": "null"
-                              },
-                              "brand": {
-                                "type": "string"
-                              },
-                              "color": {
-                                "type": "string"
-                              },
-                              "size": {
-                                "type": "null"
-                              },
-                              "custom_field": {
-                                "type": "string"
-                              },
-                              "custom_field_value": {
-                                "type": "string"
-                              },
-                              "custom_field_value_string": {
-                                "type": "string"
-                              },
-                              "weight": {
-                                "type": "integer"
-                              },
-                              "dimensions": {
-                                "type": "string"
-                              },
-                              "price": {
-                                "type": "integer"
-                              },
-                              "cost": {
-                                "type": "integer"
-                              },
-                              "mrp": {
-                                "type": "integer"
-                              },
-                              "quantity": {
-                                "type": "integer"
-                              },
-                              "returnable_quantity": {
-                                "type": "integer"
-                              },
-                              "tax": {
-                                "type": "integer"
-                              },
-                              "status": {
-                                "type": "integer"
-                              },
-                              "net_total": {
-                                "type": "integer"
-                              },
-                              "discount": {
-                                "type": "integer"
-                              },
-                              "product_options": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string"
-                                }
-                              },
-                              "selling_price": {
-                                "type": "integer"
-                              },
-                              "tax_percentage": {
-                                "type": "integer"
-                              },
-                              "discount_including_tax": {
-                                "type": "integer"
-                              },
-                              "channel_category": {
-                                "type": "string"
-                              },
-                              "packaging_material": {
-                                "type": "string"
-                              },
-                              "additional_material": {
-                                "type": "string"
-                              },
-                              "is_free_product": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        },
-                        "invoice_no": {
-                          "type": "string"
-                        },
-                        "shipments": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "integer"
-                            },
-                            "order_id": {
-                              "type": "integer"
-                            },
-                            "order_product_id": {
-                              "type": "null"
-                            },
-                            "channel_id": {
-                              "type": "integer"
-                            },
-                            "code": {
-                              "type": "string"
-                            },
-                            "cost": {
-                              "type": "string"
-                            },
-                            "tax": {
-                              "type": "string"
-                            },
-                            "awb": {
-                              "type": "null"
-                            },
-                            "rto_awb": {
-                              "type": "string"
-                            },
-                            "awb_assign_date": {
-                              "type": "null"
-                            },
-                            "etd": {
-                              "type": "string"
-                            },
-                            "delivered_date": {
-                              "type": "string"
-                            },
-                            "quantity": {
-                              "type": "integer"
-                            },
-                            "cod_charges": {
-                              "type": "string"
-                            },
-                            "number": {
-                              "type": "null"
-                            },
-                            "name": {
-                              "type": "null"
-                            },
-                            "order_item_id": {
-                              "type": "null"
-                            },
-                            "weight": {
-                              "type": "integer"
-                            },
-                            "volumetric_weight": {
-                              "type": "number"
-                            },
-                            "dimensions": {
-                              "type": "string"
-                            },
-                            "comment": {
-                              "type": "string"
-                            },
-                            "courier": {
-                              "type": "string"
-                            },
-                            "courier_id": {
-                              "type": "string"
-                            },
-                            "manifest_id": {
-                              "type": "string"
-                            },
-                            "manifest_escalate": {
-                              "type": "boolean"
-                            },
-                            "status": {
-                              "type": "string"
-                            },
-                            "isd_code": {
-                              "type": "string"
-                            },
-                            "created_at": {
-                              "type": "string"
-                            },
-                            "updated_at": {
-                              "type": "string"
-                            },
-                            "pod": {
-                              "type": "null"
-                            },
-                            "eway_bill_number": {
-                              "type": "string"
-                            },
-                            "eway_bill_date": {
-                              "type": "null"
-                            },
-                            "length": {
-                              "type": "integer"
-                            },
-                            "breadth": {
-                              "type": "integer"
-                            },
-                            "height": {
-                              "type": "integer"
-                            },
-                            "rto_initiated_date": {
-                              "type": "string"
-                            },
-                            "rto_delivered_date": {
-                              "type": "string"
-                            },
-                            "shipped_date": {
-                              "type": "string"
-                            },
-                            "package_images": {
-                              "type": "string"
-                            },
-                            "is_rto": {
-                              "type": "boolean"
-                            },
-                            "eway_required": {
-                              "type": "boolean"
-                            },
-                            "invoice_link": {
-                              "type": "string"
-                            },
-                            "is_darkstore_courier": {
-                              "type": "integer"
-                            },
-                            "courier_custom_rule": {
-                              "type": "string"
-                            },
-                            "is_single_shipment": {
-                              "type": "boolean"
-                            }
-                          },
-                          "required": [
-                            "id",
-                            "order_id",
-                            "order_product_id",
-                            "channel_id",
-                            "code",
-                            "cost",
-                            "tax",
-                            "awb",
-                            "rto_awb",
-                            "awb_assign_date",
-                            "etd",
-                            "delivered_date",
-                            "quantity",
-                            "cod_charges",
-                            "number",
-                            "name",
-                            "order_item_id",
-                            "weight",
-                            "volumetric_weight",
-                            "dimensions",
-                            "comment",
-                            "courier",
-                            "courier_id",
-                            "manifest_id",
-                            "manifest_escalate",
-                            "status",
-                            "isd_code",
-                            "created_at",
-                            "updated_at",
-                            "pod",
-                            "eway_bill_number",
-                            "eway_bill_date",
-                            "length",
-                            "breadth",
-                            "height",
-                            "rto_initiated_date",
-                            "rto_delivered_date",
-                            "shipped_date",
-                            "package_images",
-                            "is_rto",
-                            "eway_required",
-                            "invoice_link",
-                            "is_darkstore_courier",
-                            "courier_custom_rule",
-                            "is_single_shipment"
-                          ]
-                        },
-                        "awb_data": {
-                          "type": "object",
-                          "properties": {
-                            "awb": {
-                              "type": "string"
-                            },
-                            "applied_weight": {
-                              "type": "string"
-                            },
-                            "charged_weight": {
-                              "type": "string"
-                            },
-                            "billed_weight": {
-                              "type": "string"
-                            },
-                            "routing_code": {
-                              "type": "string"
-                            },
-                            "rto_routing_code": {
-                              "type": "string"
-                            },
-                            "charges": {
-                              "type": "object",
-                              "properties": {
-                                "zone": {
-                                  "type": "string"
-                                },
-                                "cod_charges": {
-                                  "type": "string"
-                                },
-                                "applied_weight_amount": {
-                                  "type": "string"
-                                },
-                                "freight_charges": {
-                                  "type": "string"
-                                },
-                                "applied_weight": {
-                                  "type": "string"
-                                },
-                                "charged_weight": {
-                                  "type": "string"
-                                },
-                                "charged_weight_amount": {
-                                  "type": "string"
-                                },
-                                "charged_weight_amount_rto": {
-                                  "type": "string"
-                                },
-                                "applied_weight_amount_rto": {
-                                  "type": "string"
-                                },
-                                "service_type_id": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "zone",
-                                "cod_charges",
-                                "applied_weight_amount",
-                                "freight_charges",
-                                "applied_weight",
-                                "charged_weight",
-                                "charged_weight_amount",
-                                "charged_weight_amount_rto",
-                                "applied_weight_amount_rto",
-                                "service_type_id"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "awb",
-                            "applied_weight",
-                            "charged_weight",
-                            "billed_weight",
-                            "routing_code",
-                            "rto_routing_code",
-                            "charges"
-                          ]
-                        },
-                        "order_insurance": {
-                          "type": "object",
-                          "properties": {
-                            "insurance_status": {
-                              "type": "string"
-                            },
-                            "policy_no": {
-                              "type": "string"
-                            },
-                            "claim_enable": {
-                              "type": "boolean"
-                            }
-                          },
-                          "required": [
-                            "insurance_status",
-                            "policy_no",
-                            "claim_enable"
-                          ]
-                        },
-                        "return_pickup_data": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "integer"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "email": {
-                              "type": "string"
-                            },
-                            "address": {
-                              "type": "string"
-                            },
-                            "address_2": {
-                              "type": "string"
-                            },
-                            "city": {
-                              "type": "string"
-                            },
-                            "state": {
-                              "type": "string"
-                            },
-                            "country": {
-                              "type": "string"
-                            },
-                            "pin_code": {
-                              "type": "string"
-                            },
-                            "phone": {
-                              "type": "string"
-                            },
-                            "lat": {
-                              "type": "null"
-                            },
-                            "long": {
-                              "type": "null"
-                            },
-                            "order_id": {
-                              "type": "integer"
-                            },
-                            "created_at": {
-                              "type": "string"
-                            },
-                            "updated_at": {
-                              "type": "string"
-                            }
-                          },
-                          "required": [
-                            "id",
-                            "name",
-                            "email",
-                            "address",
-                            "address_2",
-                            "city",
-                            "state",
-                            "country",
-                            "pin_code",
-                            "phone",
-                            "lat",
-                            "long",
-                            "order_id",
-                            "created_at",
-                            "updated_at"
-                          ]
-                        },
-                        "company_logo": {
-                          "type": "null"
-                        },
-                        "allow_return": {
-                          "type": "integer"
-                        },
-                        "is_return": {
-                          "type": "integer"
-                        },
-                        "is_incomplete": {
-                          "type": "integer"
-                        },
-                        "errors": {
-                          "type": "null"
-                        },
-                        "payment_code": {
-                          "type": "null"
-                        },
-                        "coupon_is_visible": {
-                          "type": "boolean"
-                        },
-                        "coupons": {
-                          "type": "string"
-                        },
-                        "billing_city": {
-                          "type": "string"
-                        },
-                        "billing_name": {
-                          "type": "string"
-                        },
-                        "billing_email": {
-                          "type": "string"
-                        },
-                        "billing_phone": {
-                          "type": "string"
-                        },
-                        "billing_alternate_phone": {
-                          "type": "string"
-                        },
-                        "billing_state_name": {
-                          "type": "string"
-                        },
-                        "billing_address": {
-                          "type": "string"
-                        },
-                        "billing_country_name": {
-                          "type": "string"
-                        },
-                        "billing_pincode": {
-                          "type": "string"
-                        },
-                        "billing_address_2": {
-                          "type": "string"
-                        },
-                        "billing_mobile_country_code": {
-                          "type": "string"
-                        },
-                        "isd_code": {
-                          "type": "string"
-                        },
-                        "billing_state_id": {
-                          "type": "string"
-                        },
-                        "billing_country_id": {
-                          "type": "string"
-                        },
-                        "freight_description": {
-                          "type": "string"
-                        },
-                        "reseller_name": {
-                          "type": "string"
-                        },
-                        "shipping_is_billing": {
-                          "type": "integer"
-                        },
-                        "company_name": {
-                          "type": "string"
-                        },
-                        "shipping_title": {
-                          "type": "string"
-                        },
-                        "allow_channel_order_sync": {
-                          "type": "boolean"
-                        },
-                        "uib-tooltip-text": {
-                          "type": "string"
-                        },
-                        "api_order_id": {
-                          "type": "string"
-                        },
-                        "allow_multiship": {
-                          "type": "integer"
-                        },
-                        "other_sub_orders": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "others": {
-                          "type": "object",
-                          "properties": {
-                            "weight": {
-                              "type": "string"
-                            },
-                            "quantity": {
-                              "type": "integer"
-                            },
-                            "buyer_psid": {
-                              "type": "null"
-                            },
-                            "dimensions": {
-                              "type": "string"
-                            },
-                            "api_order_id": {
-                              "type": "string"
-                            },
-                            "company_name": {
-                              "type": "string"
-                            },
-                            "currency_code": {
-                              "type": "string"
-                            },
-                            "package_count": {
-                              "type": "string"
-                            },
-                            "shipping_city": {
-                              "type": "string"
-                            },
-                            "shipping_name": {
-                              "type": "string"
-                            },
-                            "shipping_email": {
-                              "type": "string"
-                            },
-                            "shipping_phone": {
-                              "type": "string"
-                            },
-                            "shipping_state": {
-                              "type": "string"
-                            },
-                            "custom_order_id": {
-                              "type": "null"
-                            },
-                            "billing_isd_code": {
-                              "type": "string"
-                            },
-                            "forward_order_id": {
-                              "type": "null"
-                            },
-                            "shipping_address": {
-                              "type": "string"
-                            },
-                            "shipping_charges": {
-                              "type": "string"
-                            },
-                            "shipping_country": {
-                              "type": "string"
-                            },
-                            "shipping_pincode": {
-                              "type": "string"
-                            },
-                            "shipping_address_2": {
-                              "type": "string"
-                            }
-                          },
-                          "required": [
-                            "weight",
-                            "quantity",
-                            "buyer_psid",
-                            "dimensions",
-                            "api_order_id",
-                            "company_name",
-                            "currency_code",
-                            "package_count",
-                            "shipping_city",
-                            "shipping_name",
-                            "shipping_email",
-                            "shipping_phone",
-                            "shipping_state",
-                            "custom_order_id",
-                            "billing_isd_code",
-                            "forward_order_id",
-                            "shipping_address",
-                            "shipping_charges",
-                            "shipping_country",
-                            "shipping_pincode",
-                            "shipping_address_2"
-                          ]
-                        },
-                        "is_order_verified": {
-                          "type": "integer"
-                        },
-                        "extra_info": {
-                          "type": "object",
-                          "properties": {
-                            "qc_check": {
-                              "type": "integer"
-                            },
-                            "qc_params": {
-                              "type": "string"
-                            },
-                            "order_type": {
-                              "type": "integer"
-                            },
-                            "amazon_dg_status": {
-                              "type": "boolean"
-                            },
-                            "forward_order_id": {
-                              "type": "string"
-                            },
-                            "bluedart_dg_status": {
-                              "type": "boolean"
-                            },
-                            "other_courier_dg_status": {
-                              "type": "boolean"
-                            },
-                            "insurace_opted_at_order_creation": {
-                              "type": "boolean"
-                            }
-                          },
-                          "required": [
-                            "qc_check",
-                            "qc_params",
-                            "order_type",
-                            "amazon_dg_status",
-                            "forward_order_id",
-                            "bluedart_dg_status",
-                            "other_courier_dg_status",
-                            "insurace_opted_at_order_creation"
-                          ]
-                        },
-                        "dup": {
-                          "type": "integer"
-                        },
-                        "is_blackbox_seller": {
-                          "type": "boolean"
-                        },
-                        "shipping_method": {
-                          "type": "string"
-                        },
-                        "refund_detail": {
-                          "type": "object",
-                          "properties": {
-                            "refund_mode": {
-                              "type": "string"
-                            },
-                            "account_holder_name": {
-                              "type": "string"
-                            },
-                            "account_number": {
-                              "type": "string"
-                            },
-                            "bank_ifsc": {
-                              "type": "string"
-                            },
-                            "bank_name": {
-                              "type": "string"
-                            }
-                          },
-                          "required": [
-                            "refund_mode",
-                            "account_holder_name",
-                            "account_number",
-                            "bank_ifsc",
-                            "bank_name"
-                          ]
-                        },
-                        "pickup_address": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "eway_bill_number": {
-                          "type": "string"
-                        },
-                        "eway_bill_url": {
-                          "type": "string"
-                        },
-                        "eway_required": {
-                          "type": "boolean"
-                        },
-                        "irn_no": {
-                          "type": "string"
-                        },
-                        "engage": {
-                          "type": "null"
-                        },
-                        "seller_can_edit": {
-                          "type": "boolean"
-                        },
-                        "seller_can_cancell": {
-                          "type": "boolean"
-                        },
-                        "is_post_ship_status": {
-                          "type": "boolean"
-                        },
-                        "order_tag": {
-                          "type": "string"
-                        },
-                        "qc_status": {
-                          "type": "string"
-                        },
-                        "qc_reason": {
-                          "type": "string"
-                        },
-                        "qc_image": {
-                          "type": "string"
-                        },
-                        "product_qc": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "product_id": {
-                                "type": "integer"
-                              },
-                              "qc_values": {
-                                "type": "object",
-                                "properties": {
-                                  "qc_product_name": {
-                                    "type": "object",
-                                    "properties": {
-                                      "value": {
-                                        "type": "string"
-                                      },
-                                      "name": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "value",
-                                      "name"
-                                    ]
-                                  },
-                                  "qc_size": {
-                                    "type": "object",
-                                    "properties": {
-                                      "value": {
-                                        "type": "string"
-                                      },
-                                      "name": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "value",
-                                      "name"
-                                    ]
-                                  },
-                                  "qc_color": {
-                                    "type": "object",
-                                    "properties": {
-                                      "value": {
-                                        "type": "string"
-                                      },
-                                      "name": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "value",
-                                      "name"
-                                    ]
-                                  },
-                                  "qc_brand": {
-                                    "type": "object",
-                                    "properties": {
-                                      "value": {
-                                        "type": "string"
-                                      },
-                                      "name": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "value",
-                                      "name"
-                                    ]
-                                  },
-                                  "qc_product_image": {
-                                    "type": "object",
-                                    "properties": {
-                                      "value": {
-                                        "type": "string"
-                                      },
-                                      "name": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "value",
-                                      "name"
-                                    ]
-                                  }
-                                },
-                                "required": [
-                                  "qc_product_name",
-                                  "qc_size",
-                                  "qc_color",
-                                  "qc_brand",
-                                  "qc_product_image"
-                                ]
-                              }
-                            }
-                          }
-                        },
-                        "seller_request": {
-                          "type": "null"
-                        },
-                        "change_payment_mode": {
-                          "type": "boolean"
-                        },
-                        "etd_date": {
-                          "type": "null"
-                        },
-                        "out_for_delivery_date": {
-                          "type": "null"
-                        },
-                        "delivered_date": {
-                          "type": "null"
-                        },
-                        "remittance_date": {
-                          "type": "string"
-                        },
-                        "remittance_utr": {
-                          "type": "string"
-                        },
-                        "remittance_status": {
-                          "type": "string"
-                        },
-                        "insurance_excluded": {
-                          "type": "boolean"
-                        },
-                        "can_edit_dimension": {
-                          "type": "boolean"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "channel_id",
-                        "channel_name",
-                        "base_channel_code",
-                        "is_international",
-                        "is_document",
-                        "channel_order_id",
-                        "customer_name",
-                        "customer_email",
-                        "customer_phone",
-                        "customer_address",
-                        "customer_address_2",
-                        "customer_city",
-                        "customer_state",
-                        "customer_pincode",
-                        "customer_country",
-                        "pickup_code",
-                        "pickup_location",
-                        "pickup_location_id",
-                        "pickup_id",
-                        "ship_type",
-                        "courier_mode",
-                        "currency",
-                        "country_code",
-                        "exchange_rate_usd",
-                        "exchange_rate_inr",
-                        "state_code",
-                        "payment_status",
-                        "delivery_code",
-                        "total",
-                        "total_inr",
-                        "total_usd",
-                        "net_total",
-                        "other_charges",
-                        "other_discounts",
-                        "giftwrap_charges",
-                        "expedited",
-                        "sla",
-                        "cod",
-                        "tax",
-                        "total_kerala_cess",
-                        "discount",
-                        "status",
-                        "sub_status",
-                        "status_code",
-                        "master_status",
-                        "payment_method",
-                        "purpose_of_shipment",
-                        "channel_created_at",
-                        "created_at",
-                        "order_date",
-                        "updated_at",
-                        "products",
-                        "invoice_no",
-                        "shipments",
-                        "awb_data",
-                        "order_insurance",
-                        "return_pickup_data",
-                        "company_logo",
-                        "allow_return",
-                        "is_return",
-                        "is_incomplete",
-                        "errors",
-                        "payment_code",
-                        "coupon_is_visible",
-                        "coupons",
-                        "billing_city",
-                        "billing_name",
-                        "billing_email",
-                        "billing_phone",
-                        "billing_alternate_phone",
-                        "billing_state_name",
-                        "billing_address",
-                        "billing_country_name",
-                        "billing_pincode",
-                        "billing_address_2",
-                        "billing_mobile_country_code",
-                        "isd_code",
-                        "billing_state_id",
-                        "billing_country_id",
-                        "freight_description",
-                        "reseller_name",
-                        "shipping_is_billing",
-                        "company_name",
-                        "shipping_title",
-                        "allow_channel_order_sync",
-                        "uib-tooltip-text",
-                        "api_order_id",
-                        "allow_multiship",
-                        "other_sub_orders",
-                        "others",
-                        "is_order_verified",
-                        "extra_info",
-                        "dup",
-                        "is_blackbox_seller",
-                        "shipping_method",
-                        "refund_detail",
-                        "pickup_address",
-                        "eway_bill_number",
-                        "eway_bill_url",
-                        "eway_required",
-                        "irn_no",
-                        "engage",
-                        "seller_can_edit",
-                        "seller_can_cancell",
-                        "is_post_ship_status",
-                        "order_tag",
-                        "qc_status",
-                        "qc_reason",
-                        "qc_image",
-                        "product_qc",
-                        "seller_request",
-                        "change_payment_mode",
-                        "etd_date",
-                        "out_for_delivery_date",
-                        "delivered_date",
-                        "remittance_date",
-                        "remittance_utr",
-                        "remittance_status",
-                        "insurance_excluded",
-                        "can_edit_dimension"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                },
-                "example": {
-                  "data": {
-                    "id": 259492257,
-                    "channel_id": 38026,
-                    "channel_name": "MANUAL1",
-                    "base_channel_code": "CS",
-                    "is_international": 0,
-                    "is_document": 0,
-                    "channel_order_id": "1873081902",
-                    "customer_name": "DemoHome ",
-                    "customer_email": "abc@gmail.com",
-                    "customer_phone": "9876543236",
-                    "customer_address": "408, Gautami, Kondapur",
-                    "customer_address_2": null,
-                    "customer_city": "North West Delhi",
-                    "customer_state": "Delhi",
-                    "customer_pincode": "110088",
-                    "customer_country": "India",
-                    "pickup_code": "",
-                    "pickup_location": "",
-                    "pickup_location_id": "",
-                    "pickup_id": "",
-                    "ship_type": "",
-                    "courier_mode": "",
-                    "currency": "INR",
-                    "country_code": 99,
-                    "exchange_rate_usd": 0,
-                    "exchange_rate_inr": 0,
-                    "state_code": 1483,
-                    "payment_status": "",
-                    "delivery_code": "110088",
-                    "total": 345,
-                    "total_inr": 0,
-                    "total_usd": 0,
-                    "net_total": "345.00",
-                    "other_charges": "0.00",
-                    "other_discounts": "0.00",
-                    "giftwrap_charges": "0.00",
-                    "expedited": 0,
-                    "sla": "2 days",
-                    "cod": 0,
-                    "tax": 0,
-                    "total_kerala_cess": "",
-                    "discount": 0,
-                    "status": "RETURN PENDING",
-                    "sub_status": null,
-                    "status_code": 21,
-                    "master_status": "",
-                    "payment_method": "prepaid",
-                    "purpose_of_shipment": 0,
-                    "channel_created_at": "21 Sep 2022 05:25 PM",
-                    "created_at": "21 Sep 2022 05:28 PM",
-                    "order_date": "21 Sep 2022",
-                    "updated_at": "21 Sep 2022 05:28 PM",
-                    "products": [
-                      {
-                        "id": 365076966,
-                        "order_id": 259492257,
-                        "product_id": 1620533,
-                        "name": "watch",
-                        "sku": "Tshirt-Blue-41",
-                        "description": "WHEAT AND MESLIN DURUM WHEAT : OF SEED QUALITY",
-                        "channel_order_product_id": "365076966",
-                        "channel_sku": "Tshirt-Blue-41",
-                        "hsn": "",
-                        "model": null,
-                        "manufacturer": null,
-                        "brand": "",
-                        "color": "",
-                        "size": null,
-                        "custom_field": "",
-                        "custom_field_value": "",
-                        "custom_field_value_string": "",
-                        "weight": 0,
-                        "dimensions": "0x0x0",
-                        "price": 345,
-                        "cost": 345,
-                        "mrp": 400,
-                        "quantity": 1,
-                        "returnable_quantity": 0,
-                        "tax": 0,
-                        "status": 1,
-                        "net_total": 345,
-                        "discount": 0,
-                        "product_options": [],
-                        "selling_price": 345,
-                        "tax_percentage": 0,
-                        "discount_including_tax": 0,
-                        "channel_category": "Default Category",
-                        "packaging_material": "",
-                        "additional_material": "",
-                        "is_free_product": ""
-                      }
-                    ],
-                    "invoice_no": "",
-                    "shipments": {
-                      "id": 258878960,
-                      "order_id": 259492257,
-                      "order_product_id": null,
-                      "channel_id": 38026,
-                      "code": "",
-                      "cost": "0.00",
-                      "tax": "0.00",
-                      "awb": null,
-                      "rto_awb": "",
-                      "awb_assign_date": null,
-                      "etd": "",
-                      "delivered_date": "",
-                      "quantity": 1,
-                      "cod_charges": "0.00",
-                      "number": null,
-                      "name": null,
-                      "order_item_id": null,
-                      "weight": 1,
-                      "volumetric_weight": 0.266,
-                      "dimensions": "11.000x11.000x11.000",
-                      "comment": "",
-                      "courier": "",
-                      "courier_id": "",
-                      "manifest_id": "",
-                      "manifest_escalate": false,
-                      "status": "PENDING",
-                      "isd_code": "+91",
-                      "created_at": "21st Sep 2022 05:28 PM",
-                      "updated_at": "21st Sep 2022 05:28 PM",
-                      "pod": null,
-                      "eway_bill_number": "-",
-                      "eway_bill_date": null,
-                      "length": 11,
-                      "breadth": 11,
-                      "height": 11,
-                      "rto_initiated_date": "",
-                      "rto_delivered_date": "",
-                      "shipped_date": "",
-                      "package_images": "",
-                      "is_rto": false,
-                      "eway_required": false,
-                      "invoice_link": "",
-                      "is_darkstore_courier": 0,
-                      "courier_custom_rule": "",
-                      "is_single_shipment": true
-                    },
-                    "awb_data": {
-                      "awb": "",
-                      "applied_weight": "",
-                      "charged_weight": "",
-                      "billed_weight": "",
-                      "routing_code": "",
-                      "rto_routing_code": "",
-                      "charges": {
-                        "zone": "",
-                        "cod_charges": "",
-                        "applied_weight_amount": "",
-                        "freight_charges": "",
-                        "applied_weight": "",
-                        "charged_weight": "",
-                        "charged_weight_amount": "",
-                        "charged_weight_amount_rto": "",
-                        "applied_weight_amount_rto": "",
-                        "service_type_id": ""
-                      }
-                    },
-                    "order_insurance": {
-                      "insurance_status": "No",
-                      "policy_no": "N/A",
-                      "claim_enable": false
-                    },
-                    "return_pickup_data": {
-                      "id": 2143757,
-                      "name": "ashwin ashwin",
-                      "email": "ashwingunadeep@gmail.com",
-                      "address": "shiprocket",
-                      "address_2": "shiprocket",
-                      "city": "South West Delhi",
-                      "state": "Delhi",
-                      "country": "India",
-                      "pin_code": "110030",
-                      "phone": "9562817406",
-                      "lat": null,
-                      "long": null,
-                      "order_id": 259492257,
-                      "created_at": "2022-09-21 17:28:40",
-                      "updated_at": "2022-09-21 17:28:40"
-                    },
-                    "company_logo": null,
-                    "allow_return": 0,
-                    "is_return": 1,
-                    "is_incomplete": 0,
-                    "errors": null,
-                    "payment_code": null,
-                    "coupon_is_visible": false,
-                    "coupons": "",
-                    "billing_city": "",
-                    "billing_name": "",
-                    "billing_email": "",
-                    "billing_phone": "",
-                    "billing_alternate_phone": "",
-                    "billing_state_name": "",
-                    "billing_address": "",
-                    "billing_country_name": "",
-                    "billing_pincode": "",
-                    "billing_address_2": "",
-                    "billing_mobile_country_code": "+91",
-                    "isd_code": "",
-                    "billing_state_id": "",
-                    "billing_country_id": "",
-                    "freight_description": "Forward charges",
-                    "reseller_name": "",
-                    "shipping_is_billing": 0,
-                    "company_name": "shiprocket",
-                    "shipping_title": "",
-                    "allow_channel_order_sync": false,
-                    "uib-tooltip-text": "Re-fetch orders with updated details",
-                    "api_order_id": "",
-                    "allow_multiship": 0,
-                    "other_sub_orders": [],
-                    "others": {
-                      "weight": "1",
-                      "quantity": 1,
-                      "buyer_psid": null,
-                      "dimensions": "11x11x11",
-                      "api_order_id": "",
-                      "company_name": "shiprocket",
-                      "currency_code": "INR",
-                      "package_count": "1",
-                      "shipping_city": "North West Delhi",
-                      "shipping_name": "DemoHome ",
-                      "shipping_email": "abc@gmail.com",
-                      "shipping_phone": "9876543236",
-                      "shipping_state": "Delhi",
-                      "custom_order_id": null,
-                      "billing_isd_code": "+91",
-                      "forward_order_id": null,
-                      "shipping_address": "408, Gautami, Kondapur",
-                      "shipping_charges": "0",
-                      "shipping_country": "India",
-                      "shipping_pincode": "110088",
-                      "shipping_address_2": ""
-                    },
-                    "is_order_verified": 0,
-                    "extra_info": {
-                      "qc_check": 1,
-                      "qc_params": "Product Name,Size,Color,Brand,Product Image",
-                      "order_type": 1,
-                      "amazon_dg_status": false,
-                      "forward_order_id": "",
-                      "bluedart_dg_status": false,
-                      "other_courier_dg_status": false,
-                      "insurace_opted_at_order_creation": false
-                    },
-                    "dup": 0,
-                    "is_blackbox_seller": false,
-                    "shipping_method": "SR",
-                    "refund_detail": {
-                      "refund_mode": "Store Credits",
-                      "account_holder_name": "",
-                      "account_number": "",
-                      "bank_ifsc": "",
-                      "bank_name": ""
-                    },
-                    "pickup_address": [],
-                    "eway_bill_number": "",
-                    "eway_bill_url": "",
-                    "eway_required": false,
-                    "irn_no": "",
-                    "engage": null,
-                    "seller_can_edit": false,
-                    "seller_can_cancell": false,
-                    "is_post_ship_status": false,
-                    "order_tag": "",
-                    "qc_status": "",
-                    "qc_reason": "",
-                    "qc_image": "",
-                    "product_qc": [
-                      {
-                        "product_id": 365076966,
-                        "qc_values": {
-                          "qc_product_name": {
-                            "value": "watch",
-                            "name": "Product Name"
-                          },
-                          "qc_size": {
-                            "value": "asdasd",
-                            "name": "Size"
-                          },
-                          "qc_color": {
-                            "value": "asdasd",
-                            "name": "Color"
-                          },
-                          "qc_brand": {
-                            "value": "asdas",
-                            "name": "Brand"
-                          },
-                          "qc_product_image": {
-                            "value": "https://s3-ap-southeast-1.amazonaws.com/kr-shipmultichannel/1663238198WTVf4.jpeg",
-                            "name": "Product Image"
-                          }
-                        }
-                      }
-                    ],
-                    "seller_request": null,
-                    "change_payment_mode": true,
-                    "etd_date": null,
-                    "out_for_delivery_date": null,
-                    "delivered_date": null,
-                    "remittance_date": "",
-                    "remittance_utr": "",
-                    "remittance_status": "",
-                    "insurance_excluded": true,
-                    "can_edit_dimension": true
-                  }
-                }
-              }
-            },
-            "headers": {}
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "status_code": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "status_code"
-                  ]
-                },
-                "example": {
-                  "message": "Order ID not found",
-                  "status_code": 400
-                }
-              }
-            },
-            "headers": {}
-          },
-          "404": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "status_code": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "status_code"
-                  ]
-                },
-                "example": {
-                  "message": "404 Not Found",
-                  "status_code": 404
                 }
               }
             },
@@ -16110,6 +14574,7 @@
         "summary": "Get Wallet Balance",
         "deprecated": false,
         "description": "Use this API to get the Wallet balance details of your Shiprocket account. No parameters are required to access this API.",
+        "operationId": "getWalletBalance",
         "tags": [],
         "parameters": [
           {
@@ -16617,6 +15082,15 @@
         "tags": [],
         "parameters": [
           {
+            "name": "product_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "Content-Type",
             "in": "header",
             "description": "",
@@ -16849,6 +15323,15 @@
         "description": "Use this API to convert an existing product to a QC product. The {productID} will be the \"id\" from the \"[Get all products](https://apidocs.shiprocket.in/#0b8d1f26-3abd-4f4e-9cd8-3928bcfcf30b)\" or \"[Get specific product details](https://apidocs.shiprocket.in/#134f7710-660c-464f-b579-6da46ba9402f)\" API.\n\n#### Parameters:\n\n| **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** |\n| --- | --- | --- | --- | --- |\n| `sku` | YES | _string_ | Stock Keeping Unit or the identification unit of an individual product (generally alphanumeric). | bat123 |\n| `product_image` | YES | _string_ | Pickup agent will cross check shared product color with the actual product received from the buyer. Mandatory for all QC Products | [https://abc/xyz.jpg](https://abc/xyz.jpg) |\n| `serial_no` | NO | _string_ | A serial number (SN) is a unique alphanumeric value assigned to each individual product. | 12345 |\n| `size` | NO | _string_ | Pickup agent will cross check shared product size with the size on the label/tag. | L |\n| `color` | NO | _string_ | Pickup agent will cross check shared product color with the actual product received from the buyer. | Green |\n| `brand` | NO | _integer_ | The pickup agent will cross-check the provided brand name visible on the item(s) or its packaging. | shiprocket |\n| `brand_box` | NO | _string_ | The pickup agent will cross-check the provided brand name, which should match the brand tag affixed to the item(s) upon delivery | shiprocket |\n| `product_imei` | NO | _string_ | \"It is a 15-digit unique number. It is displayed on the screen, on the box, or at the back of the appliance. This can be used to check production & guarantee of the appliance. | 1234567890 |",
         "tags": [],
         "parameters": [
+          {
+            "name": "productID",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "Authorization",
             "in": "header",
@@ -18420,7 +16903,17 @@
         "deprecated": false,
         "description": "This API is used to update your product inventory details.\n\nFirst, you need to pass the product_id of the product in the endpoint URL.\nYou can then set the quantity and action you want to perform on the existing inventory of the specified product.\n\n**Note:**\n- The product_id can be found using the 'Get Inventory Details' API.\n- The id is to be passed in the endpoint URL itself.\n\n#### Path:\n\n\n|                 **EXAMPLE**                \t|\n|:------------------------------------------:\t|\n| https://apiv2.shiprocket.in/v1/external/inventory/17454637/update\t|\n\n\n\n#### Parameters:\n\n| **PARAMS** \t| **REQUIRED** \t|  **DATA TYPE** \t|                                                                                                                      **DESCRIPTION**                                                                                                                     \t| **EXAMPLE** \t|\n|:----------:\t|:------------:\t|:--------------:\t|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:\t|:-----------:\t|\n|  `quantity`  \t|      YES     \t|    *integer*   \t|                                                                                                           The quantity of the product you want.                                                                                                          \t|      2      \t|\n|   `action`   \t|      YES     \t|    *integer*   \t|  The action you want to perform. *Value*:    - **add** : Adds the specific quantity to the product inventory.   - **replace** : Replaces the existing quantity with the specified number. - **remove** : Removes the specific number from the product inventory. \t|     add     \t|",
         "tags": [],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "text/plain": {
@@ -18613,6 +17106,15 @@
         "description": "Use this API to get a further list of all the available zones within a country, along with their ids and details.\n\nThe country ID must be passed as a path parameter to access this API.\nNo other body parameters are required.\n\n#### Path:\n\n\n|                 **EXAMPLE**                \t|\n|:------------------------------------------:\t|\n| https://apiv2.shiprocket.in/v1/external/countries/show/4 \t|",
         "tags": [],
         "parameters": [
+          {
+            "name": "country_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "Content-Type",
             "in": "header",
@@ -18955,6 +17457,100 @@
         ]
       }
     },
+    "/v1/external/billing/discrepancy": {
+      "get": {
+        "summary": "Get Dicrepancy Data",
+        "deprecated": false,
+        "description": "Get the discrepancy data associated with your account, if any.\nNo parameters are required to use this API.\n\nThe data is displayed in JSON format.",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "upper_fold_text": {
+                      "type": "string"
+                    },
+                    "lower_fild_text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data",
+                    "upper_fold_text",
+                    "lower_fild_text"
+                  ]
+                },
+                "example": {
+                  "status": 200,
+                  "data": [],
+                  "upper_fold_text": "The entered weight for the below given shipment was incorrect. Please allow us to make deduction on the basis of correct charged weight as shared by the courier company.",
+                  "lower_fild_text": "To raise a ticket for your queries, please call us on 011-39595108 or email us at support@shiprocket.in"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status_code": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status_code"
+                  ]
+                },
+                "example": {
+                  "message": "404 Not Found",
+                  "status_code": 404
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/v1/external/account/details/statement": {
       "get": {
         "summary": "Get Statement Details",
@@ -19115,100 +17711,6 @@
         ]
       }
     },
-    "/v1/external/billing/discrepancy": {
-      "get": {
-        "summary": "Get Dicrepancy Data",
-        "deprecated": false,
-        "description": "Get the discrepancy data associated with your account, if any.\nNo parameters are required to use this API.\n\nThe data is displayed in JSON format.",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "application/json",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "upper_fold_text": {
-                      "type": "string"
-                    },
-                    "lower_fild_text": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "data",
-                    "upper_fold_text",
-                    "lower_fild_text"
-                  ]
-                },
-                "example": {
-                  "status": 200,
-                  "data": [],
-                  "upper_fold_text": "The entered weight for the below given shipment was incorrect. Please allow us to make deduction on the basis of correct charged weight as shared by the courier company.",
-                  "lower_fild_text": "To raise a ticket for your queries, please call us on 011-39595108 or email us at support@shiprocket.in"
-                }
-              }
-            },
-            "headers": {}
-          },
-          "404": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "status_code": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "status_code"
-                  ]
-                },
-                "example": {
-                  "message": "404 Not Found",
-                  "status_code": 404
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
-      }
-    },
     "/v1/external/errors/{import_id}/check": {
       "get": {
         "summary": "Get File import Results",
@@ -19216,6 +17718,15 @@
         "description": "Check the import response of various file imports for any error, including bulk order imports, products and product listings.\n\nYou will have to pass the file import id as a path parameter in the endpoint URL. This id is provided at the time of importing the file.\nNo other body parameters are required. \n\n#### Path:\n\n|                 **EXAMPLE**                \t|\n|:------------------------------------------:\t|\n| https://apiv2.shiprocket.in/v1/external/errors/20212061/check \t|",
         "tags": [],
         "parameters": [
+          {
+            "name": "import_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "Content-Type",
             "in": "header",
@@ -19326,6 +17837,123 @@
           }
         ]
       }
+    },
+    "/v1/global/search": {
+      "get": {
+        "summary": "Global Search",
+        "deprecated": false,
+        "description": "",
+        "operationId": "search",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "query_string",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "MMD-12698",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "awb": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "channel_order_id": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "order_id": {
+                                "type": "integer"
+                              },
+                              "channel_order_id": {
+                                "type": "string"
+                              },
+                              "msg": {
+                                "type": "string"
+                              },
+                              "date_created_at": {
+                                "type": "string"
+                              },
+                              "is_return": {
+                                "type": "boolean"
+                              },
+                              "id": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "product_sku": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "pickup_id": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "manifest_id": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "customer": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "awb",
+                        "channel_order_id",
+                        "product_sku",
+                        "pickup_id",
+                        "manifest_id",
+                        "customer"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -19337,7 +17965,12 @@
       }
     }
   },
-  "servers": [],
+  "servers": [
+    {
+      "url": "https://apiv2.shiprocket.in",
+      "description": "Shiprocket API"
+    }
+  ],
   "security": [
     {
       "bearer": []

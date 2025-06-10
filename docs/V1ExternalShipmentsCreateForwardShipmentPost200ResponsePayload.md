@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **awb_code** | **string** |  | [default to undefined]
 **courier_company_id** | **number** |  | [default to undefined]
 **courier_name** | **string** |  | [default to undefined]
-**assigned_date_time** | [**V1ExternalShipmentsGet200ResponseDataCreatedAt**](V1ExternalShipmentsGet200ResponseDataCreatedAt.md) |  | [default to undefined]
+**assigned_date_time** | [**GetSpecificShipmentDetails200ResponseDataCreatedAt**](GetSpecificShipmentDetails200ResponseDataCreatedAt.md) |  | [default to undefined]
 **applied_weight** | **number** |  | [default to undefined]
 **cod** | **number** |  | [default to undefined]
 **label_url** | **string** |  | [default to undefined]

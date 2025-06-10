@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **remitance_count** | **number** |  | [default to undefined]
-**pagination** | [**V1ExternalOrdersGet200ResponseMetaPagination**](V1ExternalOrdersGet200ResponseMetaPagination.md) |  | [default to undefined]
+**pagination** | [**GetAllOrders200ResponseMetaPagination**](GetAllOrders200ResponseMetaPagination.md) |  | [default to undefined]
 
 ## Example
 

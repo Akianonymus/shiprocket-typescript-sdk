@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | [**Array&lt;V1ExternalProductsGet200ResponseDataInner&gt;**](V1ExternalProductsGet200ResponseDataInner.md) |  | [default to undefined]
-**meta** | [**V1ExternalOrdersProcessingReturnGet200ResponseMeta**](V1ExternalOrdersProcessingReturnGet200ResponseMeta.md) |  | [default to undefined]
+**meta** | [**GetAllReturnOrders200ResponseMeta**](GetAllReturnOrders200ResponseMeta.md) |  | [default to undefined]
 
 ## Example
 

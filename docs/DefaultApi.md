@@ -1,19 +1,25 @@
 # DefaultApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://apiv2.shiprocket.in*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
+|[**createCustomerOrder**](#createcustomerorder) | **POST** /v1/external/orders/create/adhoc | Create Custom Order |
+|[**generateToken**](#generatetoken) | **POST** /v1/external/auth/login | Generate Token|
+|[**getAllOrders**](#getallorders) | **GET** /v1/external/orders | Get all Orders|
+|[**getAllReturnOrders**](#getallreturnorders) | **GET** /v1/external/orders/processing/return | Get All Return Orders|
+|[**getSpecificOrderDetails**](#getspecificorderdetails) | **GET** /v1/external/orders/show/{id} | Get Specific Order Details|
+|[**getSpecificShipmentDetails**](#getspecificshipmentdetails) | **GET** /v1/external/shipments | Get Details of Specific Shipment|
+|[**getWalletBalance**](#getwalletbalance) | **GET** /v1/external/account/details/wallet-balance | Get Wallet Balance|
+|[**logout**](#logout) | **POST** /v1/external/auth/logout | Token Logout|
+|[**search**](#search) | **GET** /v1/global/search | Global Search|
 |[**v1ExternalAccountDetailsRemittanceGet**](#v1externalaccountdetailsremittanceget) | **GET** /v1/external/account/details/remittance | Get Remittence Info|
 |[**v1ExternalAccountDetailsStatementGet**](#v1externalaccountdetailsstatementget) | **GET** /v1/external/account/details/statement | Get Statement Details|
-|[**v1ExternalAccountDetailsWalletBalanceGet**](#v1externalaccountdetailswalletbalanceget) | **GET** /v1/external/account/details/wallet-balance | Get Wallet Balance|
-|[**v1ExternalAuthLoginPost**](#v1externalauthloginpost) | **POST** /v1/external/auth/login | Generate Token|
-|[**v1ExternalAuthLogoutPost**](#v1externalauthlogoutpost) | **POST** /v1/external/auth/logout | Token Logout|
 |[**v1ExternalBillingDiscrepancyGet**](#v1externalbillingdiscrepancyget) | **GET** /v1/external/billing/discrepancy | Get Dicrepancy Data|
 |[**v1ExternalChannelsGet**](#v1externalchannelsget) | **GET** /v1/external/channels | Get Integrated Channel Details|
 |[**v1ExternalCountriesGet**](#v1externalcountriesget) | **GET** /v1/external/countries | Get Country Codes|
 |[**v1ExternalCountriesShowCountryIdGet**](#v1externalcountriesshowcountryidget) | **GET** /v1/external/countries/show/{country_id} | Get All Zones|
-|[**v1ExternalCourierAssignAwbPost**](#v1externalcourierassignawbpost) | **POST** /v1/external/courier/assign/awb | Generate AWB for Shipment|
+|[**v1ExternalCourierAssignAwbPost**](#v1externalcourierassignawbpost) | **POST** /v1/external/courier/assign/awb | Generate AWB for Return Shipment|
 |[**v1ExternalCourierCourierListWithCountsGet**](#v1externalcouriercourierlistwithcountsget) | **GET** /v1/external/courier/courierListWithCounts | List of Couriers|
 |[**v1ExternalCourierGenerateLabelPost**](#v1externalcouriergeneratelabelpost) | **POST** /v1/external/courier/generate/label | Generate Label|
 |[**v1ExternalCourierGeneratePickupPost**](#v1externalcouriergeneratepickuppost) | **POST** /v1/external/courier/generate/pickup | Generate Pickup|
@@ -50,20 +56,15 @@ All URIs are relative to *http://localhost*
 |[**v1ExternalOrdersAddressUpdatePost**](#v1externalordersaddressupdatepost) | **POST** /v1/external/orders/address/update | Update Customer Delivery Address|
 |[**v1ExternalOrdersCancelPost**](#v1externalorderscancelpost) | **POST** /v1/external/orders/cancel | Cancel an Order|
 |[**v1ExternalOrdersCancelShipmentAwbsPost**](#v1externalorderscancelshipmentawbspost) | **POST** /v1/external/orders/cancel/shipment/awbs | Cancel a Shipment|
-|[**v1ExternalOrdersCreateAdhocPost**](#v1externalorderscreateadhocpost) | **POST** /v1/external/orders/create/adhoc | Create Custom Order|
 |[**v1ExternalOrdersCreateExchangePost**](#v1externalorderscreateexchangepost) | **POST** /v1/external/orders/create/exchange | Create Exchange Order|
 |[**v1ExternalOrdersCreatePost**](#v1externalorderscreatepost) | **POST** /v1/external/orders/create | Create Channel Specific Order|
 |[**v1ExternalOrdersCreateReturnPost**](#v1externalorderscreatereturnpost) | **POST** /v1/external/orders/create/return | Create a Return Order|
 |[**v1ExternalOrdersEditPost**](#v1externalorderseditpost) | **POST** /v1/external/orders/edit | Update Return Order|
 |[**v1ExternalOrdersExportPost**](#v1externalordersexportpost) | **POST** /v1/external/orders/export | Export your orders|
 |[**v1ExternalOrdersFulfillPatch**](#v1externalordersfulfillpatch) | **PATCH** /v1/external/orders/fulfill | Add Inventory for Ordered Product|
-|[**v1ExternalOrdersGet**](#v1externalordersget) | **GET** /v1/external/orders | Get all Orders|
 |[**v1ExternalOrdersImportPost**](#v1externalordersimportpost) | **POST** /v1/external/orders/import | Import Orders in Bulk|
 |[**v1ExternalOrdersMappingPatch**](#v1externalordersmappingpatch) | **PATCH** /v1/external/orders/mapping | Map Unmapped Products|
 |[**v1ExternalOrdersPrintInvoicePost**](#v1externalordersprintinvoicepost) | **POST** /v1/external/orders/print/invoice | Generate Invoice|
-|[**v1ExternalOrdersProcessingReturnGet**](#v1externalordersprocessingreturnget) | **GET** /v1/external/orders/processing/return | Get All Return Orders|
-|[**v1ExternalOrdersShowGet**](#v1externalordersshowget) | **GET** /v1/external/orders/show | Get Specific Order Details|
-|[**v1ExternalOrdersShowIdGet**](#v1externalordersshowidget) | **GET** /v1/external/orders/show/{id} | Get Specific Order Details|
 |[**v1ExternalOrdersUpdateAdhocPost**](#v1externalordersupdateadhocpost) | **POST** /v1/external/orders/update/adhoc | Update Order|
 |[**v1ExternalProductsGet**](#v1externalproductsget) | **GET** /v1/external/products | Get All Products|
 |[**v1ExternalProductsImportPost**](#v1externalproductsimportpost) | **POST** /v1/external/products/import | Bulk Import Products|
@@ -75,7 +76,529 @@ All URIs are relative to *http://localhost*
 |[**v1ExternalSettingsCompanyPickupGet**](#v1externalsettingscompanypickupget) | **GET** /v1/external/settings/company/pickup | Get All Pickup  Locations|
 |[**v1ExternalShipmentsCreateForwardShipmentPost**](#v1externalshipmentscreateforwardshipmentpost) | **POST** /v1/external/shipments/create/forward-shipment | Forward|
 |[**v1ExternalShipmentsCreateReturnShipmentPost**](#v1externalshipmentscreatereturnshipmentpost) | **POST** /v1/external/shipments/create/return-shipment | Return|
-|[**v1ExternalShipmentsGet**](#v1externalshipmentsget) | **GET** /v1/external/shipments | Get Details of Specific Shipment|
+
+# **createCustomerOrder**
+> CreateCustomerOrder200Response createCustomerOrder()
+
+Use this API to create a quick custom order. Quick orders are the ones where we do not store the product details in the master catalogue.  You have to pass all the required params at the minimum to create a quick custom order. You can add additional parameters as per your preference.  **Note:**  - In case the \'shipping_is_billing\' field is false, further shipping detail fields are required.       If no channel id is passed, the order will be assigned to the default custom channel. If the channel id is not known, use the \'Get All Channels\' API to get the list of all integrated channels in your Shiprocket account.  - order_id field cannot be equal to an already existing id. Doing so does not change or affect the existing order.      - New orders cannot be created with order id\'s same as that of cancelled orders. If error 422 shows up despite filling in the correct details, consider changing the order_id.      - Be sure to input the correct calculated sub_total amount. The total is not calculated automatically through the API.      - The \'order_id\' returned in the response is the Shiprocket order_id. Please save this order ID as we will use this in future API calls.       #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `order_id` | YES | _string_ | The order id you want to specify to the order. Max char: 50. (Avoid passing character values as this contradicts some other API calls). | 224477 or 224-477 | | `order_date` | YES | _string_ | The date of order creation in yyyy-mm-dd format. Time is additional. | 2019-07-24 11:11 | | `pickup_location` | YES | _string_ | The name of the pickup location added in your Shiprocket account. This cannot be a new location. | Jammu | | `channel_id` | NO | _integer_ | Mention this in case you need to assign the order to a particular channel. Default is \'Custom\'. | 27022 | | `comment` | NO | _string_ | Option to add \'From\' field to the shipment. To do this, enter the name in the following format: \'Reseller: \\[name\\]\'. | Reseller: Divine | | `reseller_name` | NO | _string_ | The \'from\' name if you want to print. Use \'Reseller: \\[name\\]\' | Reseller: Divine | | `company_name` | NO | _string_ | Name of the company. | Amazon | | `billing_customer_name` | YES | _string_ | First name of the billed customer. | John | | `billing_last_name` | NO | _string_ | Last name of the billed customer. | Doe | | `billing_address` | YES | _string_ | address details of the billed customer. | Civil line, House 20 | | `billing_address_2` | NO | _string_ | Further address details of the billed customer. | Near Hokage House | | `billing_city` | YES | _string_ | Billing address city. Max char: 30. | New Delhi | | `billing_pincode` | YES | _integer_ | Pincode of the billing address. | 110002 | | `billing_state` | YES | _string_ | Billing address state. | Delhi | | `billing_country` | YES | _string_ | Billing address country. | India | | `billing_email` | YES | _string_ | Email address of the billed customer. | [John@doe.com](https://mailto:John@doe.com) | | `billing_phone` | YES | _integer_ | The phone number of the billing customer. | 9856321472 | | `billing_alternate_phone` | NO | _integer_ | Alternate phone number of the billing customer. | 8604690454 | | `shipping_is_billing` | YES | _boolean_ | Whether the shipping address is the same as billing address. 1 or \'true\' for yes and 0 or \'false\' for no. | true | | `shipping_customer_name` | CONDITIONAL YES | _string_ | Name of the customer the order is shipped to. Required in case billing is not same as shipping. | Jane | | `shipping_last_name` | NO | _string_ | Last name of the shipping customer. | Doe | | `shipping_address` | CONDITIONAL YES | _string_ | Address of the Shipping customer. Required in case billing is not same as shipping. | Lane number 69 | | `shipping_address_2` | NO | _string_ | Further address details of shipping customer. | Andheri | | `billing_isd_code` | NO | _string_ | ISD code of the billing address. | +91 | | `shipping_city` | CONDITIONAL YES | _string_ | Shipping address city. | Mumbai | | `shipping_pincode` | CONDITIONAL YES | _integer_ | Shipping address pincode. | 200912 | | `shipping_country` | CONDITIONAL YES | _string_ | Shipping address country. | India | | `shipping_state` | CONDITIONAL YES | _string_ | Shipping address state. | Maharashtra | | `shipping_email` | NO | _string_ | Email of the shipping customer. | [Jane@doe.com](https://mailto:Jane@doe.com) | | `shipping_phone` | CONDITIONAL YES | _integer_ | Phone no. of the shipping customer. |  | | `longitude` | NO | _float_ | Destination (Shipping address) Longitude. | 69.0747 | | `latitude` | NO | _float_ | Destination (Shipping address) Latitude | 22.4064 | | `order_items` | YES | / | List of items and their relevant fields in the form of Array. | / | | `name` | YES | _string_ | Name of the product. | Jeans | | `sku` | YES | _string_ | The sku id of the product. | cbs123 | | `units` | YES | _integer_ | No of units that are to be shipped. | 10 | | `selling_price` | YES | _integer_ | The selling price per unit in Rupee. Inclusive of GST. | 900 | | `discount` | NO | _integer_ | The discount amount in Rupee. Inclusive of tax. | 10 | | `tax` | NO | _integer_ | The tax percentage on the item. | 5 | | `hsn` | NO | _integer_ | Harmonised System Nomenclature code. Used to determine the category of taxation the goods fall under. | 44122 | | `payment_method` | YES | _string_ | The method of payment. Can be either COD (Cash on delivery) Or Prepaid. | COD | | `shipping_charges` | NO | _integer_ | Shipping charges if any in Rupee. | 5 | | `giftwrap_charges` | NO | _integer_ | Giftwrap charges if any in Rupee. | 5 | | `transaction_charges` | NO | _integer_ | Transaction charges if any in Rupee. | 5 | | `total_discount` | NO | _integer_ | The total discount amount in Rupee. | 15 | | `sub_total` | YES | _integer_ | Calculated sub total amount in Rupee after deductions. | 9010 | | `length` | YES | _float_ | The length of the item in cms. Must be more than 0.5. | 10 | | `breadth` | YES | _float_ | The breadth of the item in cms. Must be more than 0.5. | 10 | | `height` | YES | _float_ | The height of the item in cms. Must be more than 0.5. | 10 | | `weight` | YES | _float_ | The weight of the item in kgs. Must be more than 0. | 2.5 | | `ewaybill_no` | NO | _string_ | Details relating to the shipment of goods. . | K92373490 | | `customer_gstin` | NO | _string_ | Goods and Services Tax Identification Number. | 29ABCDE1234F2Z5 | | `invoice_number` | NO | _string_ |  |  | | `order_type` | NO | _string_ | Key to differentiate between Essentials or Non Essentials Shipments. Order type can only be ESSENTIALS or NON ESSENTIALS. Please note it is case sensitive and blank values are allowed. | ESSENTIALS | | `checkout_shipping_method` | NO | _string_ | Only for SRF users. | a. SR_RUSH: SDD, NDD  <br>b. SR_STANDARD: Surface Delivery  <br>c. SR_EXPRESS: Air Delivery  <br>d. SR_QUICK: 3 hrs delivery | | `what3words_address` | NO | _string_ | What3words is a proprietary geocode system designed to identify any location on the surface of Earth with a resolution of about 3 meters. The system encodes geographic coordinates into three permanently fixed dictionary words. | toddler.geologist.animated | | `is_insurance_opt` | NO | _boolean_ | To secure shipments above the order value of Rs 2500 | true | | `is_document` | NO | _integer_ | To create a document order | 1 or 0 | | `order_tag` | NO | _string_ | To add tags to your orders | abc, xyz | | `is_insurance_opt` | NO | _boolean_ | To opt in or out of insurance | true or false |
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let body: string; // (optional)
+
+const { status, data } = await apiInstance.createCustomerOrder(
+    body
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **body** | **string**|  | |
+
+
+### Return type
+
+**CreateCustomerOrder200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: text/plain
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**400** |  |  -  |
+|**422** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **generateToken**
+> GenerateToken200Response generateToken()
+
+
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration,
+    GenerateTokenRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let generateTokenRequest: GenerateTokenRequest; // (optional)
+
+const { status, data } = await apiInstance.generateToken(
+    generateTokenRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **generateTokenRequest** | **GenerateTokenRequest**|  | |
+
+
+### Return type
+
+**GenerateToken200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**403** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllOrders**
+> GetAllOrders200Response getAllOrders()
+
+This API call will display a list of all created and available orders in your Shiprocket account. The product and shipment details are displayed as sub-arrays within each order detail.  You can also sort and filter the data according to your needs by passing the optional parameters. Not passing anything will display the data in the default format.  You can also fetch the data based on the order update date. PFB the validations:  ``` 1. if updated_to => passed and updated_from not passed =>, error will come => Please send update_from date along with update_to date 2. if updated_from => passed and updated_to => paased => and from-to > 30 then error => Difference between updated_from and update_to date should not be greater than 30 days. 3. if updated_From < 30 then error => Updated_from date should not be less than 30 days from current date   ```  #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `page` | NO | _integer_ | The page number to display. | 5 | | `per_page` | NO | _integer_ | The number of entries per page. | 5 | | `sort` | NO | _string_ | Sort conditions: ASC or DESC | ASC | | `sort_by` | NO | _string_ | The Field to sort by: id or status | id | | `to` | NO | _string_ | The end date. | 2018-07-24 | | `from` | NO | _string_ | The start date. | 2019-07-24 | | `filter_by` | NO | _string_ | Field to filter by. | status, payment_method, delivery_country, channel_order_id | | `filter` | NO | _string_ | Value of the field |  | | `search` | NO | _string_ | Search for AWB or by Channel order_id (order id specified by you). | 224477 | | `pickup_location` | NO | _string_ | Search Orders on the basis of pickup location. | xyz | | `channel_id` | NO | _integer_ | Channel ID Returned in Get Integrated Channels API | 123 | | `fbs` | NO | _integer_ | Use this filter if you want to view and filter the SRF orders | 0 or 1 |
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let sort: string; //Sort conditions. (optional) (default to undefined)
+let sortBy: string; //The field to sort by. (optional) (default to undefined)
+let to: string; //The end date. (optional) (default to undefined)
+let from: string; //The start date. (optional) (default to undefined)
+let filterBy: string; //Field to filter by. (optional) (default to undefined)
+let filter: string; //(Used with filter_by) — value to filter by. (optional) (default to undefined)
+let search: string; //Search by AWB or channel_order_id (your order ID). (optional) (default to undefined)
+let pickupLocation: string; //Search orders based on pickup location. (optional) (default to undefined)
+let channelId: number; //Channel ID returned from Get Integrated Channels API. (optional) (default to undefined)
+let page: number; //Page Number (optional) (default to undefined)
+let perPage: number; //No of records in a single requests (optional) (default to undefined)
+
+const { status, data } = await apiInstance.getAllOrders(
+    sort,
+    sortBy,
+    to,
+    from,
+    filterBy,
+    filter,
+    search,
+    pickupLocation,
+    channelId,
+    page,
+    perPage
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **sort** | [**string**] | Sort conditions. | (optional) defaults to undefined|
+| **sortBy** | [**string**] | The field to sort by. | (optional) defaults to undefined|
+| **to** | [**string**] | The end date. | (optional) defaults to undefined|
+| **from** | [**string**] | The start date. | (optional) defaults to undefined|
+| **filterBy** | [**string**] | Field to filter by. | (optional) defaults to undefined|
+| **filter** | [**string**] | (Used with filter_by) — value to filter by. | (optional) defaults to undefined|
+| **search** | [**string**] | Search by AWB or channel_order_id (your order ID). | (optional) defaults to undefined|
+| **pickupLocation** | [**string**] | Search orders based on pickup location. | (optional) defaults to undefined|
+| **channelId** | [**number**] | Channel ID returned from Get Integrated Channels API. | (optional) defaults to undefined|
+| **page** | [**number**] | Page Number | (optional) defaults to undefined|
+| **perPage** | [**number**] | No of records in a single requests | (optional) defaults to undefined|
+
+
+### Return type
+
+**GetAllOrders200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllReturnOrders**
+> GetAllReturnOrders200Response getAllReturnOrders()
+
+Using this API, you can get a list of all created return orders in your Shiprocket account, along with their details.  No parameters are required to use the API. However, further parameters can be defined to sort and filter the data.  #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `page` | NO | _integer_ | The page number to display. | 1 | | `per_page` | NO | _integer_ | The number of orders per page. | 2 | | `to` | NO | _string_ | Ending date of search. | 2019-08-04 | | `from` | NO | _string_ | Starting date of search. | 2019-08-05 |
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let authorization: string; // (default to undefined)
+let sort: string; //Sort conditions. (optional) (default to undefined)
+let sortBy: string; //The field to sort by. (optional) (default to undefined)
+let to: string; //The end date. (optional) (default to undefined)
+let from: string; //The start date. (optional) (default to undefined)
+let filterBy: string; //Field to filter by. (optional) (default to undefined)
+let filter: string; //(Used with filter_by) — value to filter by. (optional) (default to undefined)
+let search: string; //Search by AWB or channel_order_id (your order ID). (optional) (default to undefined)
+let pickupLocation: string; //Search orders based on pickup location. (optional) (default to undefined)
+let channelId: number; //Channel ID returned from Get Integrated Channels API. (optional) (default to undefined)
+let page: number; //Page Number (optional) (default to undefined)
+let perPage: number; //No of records in a single requests (optional) (default to undefined)
+
+const { status, data } = await apiInstance.getAllReturnOrders(
+    authorization,
+    sort,
+    sortBy,
+    to,
+    from,
+    filterBy,
+    filter,
+    search,
+    pickupLocation,
+    channelId,
+    page,
+    perPage
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **authorization** | [**string**] |  | defaults to undefined|
+| **sort** | [**string**] | Sort conditions. | (optional) defaults to undefined|
+| **sortBy** | [**string**] | The field to sort by. | (optional) defaults to undefined|
+| **to** | [**string**] | The end date. | (optional) defaults to undefined|
+| **from** | [**string**] | The start date. | (optional) defaults to undefined|
+| **filterBy** | [**string**] | Field to filter by. | (optional) defaults to undefined|
+| **filter** | [**string**] | (Used with filter_by) — value to filter by. | (optional) defaults to undefined|
+| **search** | [**string**] | Search by AWB or channel_order_id (your order ID). | (optional) defaults to undefined|
+| **pickupLocation** | [**string**] | Search orders based on pickup location. | (optional) defaults to undefined|
+| **channelId** | [**number**] | Channel ID returned from Get Integrated Channels API. | (optional) defaults to undefined|
+| **page** | [**number**] | Page Number | (optional) defaults to undefined|
+| **perPage** | [**number**] | No of records in a single requests | (optional) defaults to undefined|
+
+
+### Return type
+
+**GetAllReturnOrders200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**404** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getSpecificOrderDetails**
+> GetSpecificOrderDetails200Response getSpecificOrderDetails()
+
+Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.getSpecificOrderDetails(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**GetSpecificOrderDetails200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**400** |  |  -  |
+|**404** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getSpecificShipmentDetails**
+> GetSpecificShipmentDetails200Response getSpecificShipmentDetails()
+
+Get the details of a specific Shipment by passing the value of shipment_id in the endpoint URL. No other body parameters are required.  #### Path:  |          **EXAMPLE**          | |:----------------------------: | |  https://apiv2.shiprocket.in/v1/external/shipments/16016920  |
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let contentType: string; // (default to undefined)
+
+const { status, data } = await apiInstance.getSpecificShipmentDetails(
+    contentType
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **contentType** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**GetSpecificShipmentDetails200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**404** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getWalletBalance**
+> GetWalletBalance200Response getWalletBalance()
+
+Use this API to get the Wallet balance details of your Shiprocket account. No parameters are required to access this API.
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let contentType: string; // (default to undefined)
+
+const { status, data } = await apiInstance.getWalletBalance(
+    contentType
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **contentType** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**GetWalletBalance200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **logout**
+> object logout()
+
+[https://apiv2.shiprocket.in/v1/external/auth/logout](https://apiv2.shiprocket.in/v1/external/auth/logout)
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+const { status, data } = await apiInstance.logout();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**object**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **search**
+> Search200Response search()
+
+
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let queryString: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.search(
+    queryString
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **queryString** | [**string**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+**Search200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **v1ExternalAccountDetailsRemittanceGet**
 > V1ExternalAccountDetailsRemittanceGet200Response v1ExternalAccountDetailsRemittanceGet()
@@ -183,164 +706,6 @@ const { status, data } = await apiInstance.v1ExternalAccountDetailsStatementGet(
 |-------------|-------------|------------------|
 |**200** |  |  -  |
 |**404** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalAccountDetailsWalletBalanceGet**
-> V1ExternalAccountDetailsWalletBalanceGet200Response v1ExternalAccountDetailsWalletBalanceGet()
-
-Use this API to get the Wallet balance details of your Shiprocket account. No parameters are required to access this API.
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let contentType: string; // (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalAccountDetailsWalletBalanceGet(
-    contentType
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-**V1ExternalAccountDetailsWalletBalanceGet200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalAuthLoginPost**
-> V1ExternalAuthLoginPost200Response v1ExternalAuthLoginPost()
-
-
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration,
-    V1ExternalAuthLoginPostRequest
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let v1ExternalAuthLoginPostRequest: V1ExternalAuthLoginPostRequest; // (optional)
-
-const { status, data } = await apiInstance.v1ExternalAuthLoginPost(
-    v1ExternalAuthLoginPostRequest
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **v1ExternalAuthLoginPostRequest** | **V1ExternalAuthLoginPostRequest**|  | |
-
-
-### Return type
-
-**V1ExternalAuthLoginPost200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-|**403** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalAuthLogoutPost**
-> object v1ExternalAuthLogoutPost()
-
-[https://apiv2.shiprocket.in/v1/external/auth/logout](https://apiv2.shiprocket.in/v1/external/auth/logout)
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let contentType: string; // (default to undefined)
-let authorization: string; // (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalAuthLogoutPost(
-    contentType,
-    authorization
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | [**string**] |  | defaults to undefined|
-| **authorization** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-**object**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -516,9 +881,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let countryId: string; // (default to undefined)
 let contentType: string; // (default to undefined)
 
 const { status, data } = await apiInstance.v1ExternalCountriesShowCountryIdGet(
+    countryId,
     contentType
 );
 ```
@@ -527,6 +894,7 @@ const { status, data } = await apiInstance.v1ExternalCountriesShowCountryIdGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **countryId** | [**string**] |  | defaults to undefined|
 | **contentType** | [**string**] |  | defaults to undefined|
 
 
@@ -555,7 +923,7 @@ const { status, data } = await apiInstance.v1ExternalCountriesShowCountryIdGet(
 # **v1ExternalCourierAssignAwbPost**
 > object v1ExternalCourierAssignAwbPost()
 
-This API can be used to assign the AWB (Air Waybill Number) to your shipment. The AWB is a unique number that helps you track the shipment and get details about it.  #### Parameters:  |  **PARAMS**  | **REQUIRED**  |  **DATA TYPE**  |                                                     **DESCRIPTION**                                                     | **EXAMPLE**  | |:-----------: |:------------: |:--------------: |:----------------------------------------------------------------------------------------------------------------------: |:-----------: | | `shipment_id`  |      YES      |    *integer*    |                              The shipment id of the order you want to create the AWB for.                                |   16016920   | |  `courier_id`  |      NO       |    *integer*    |  The courier id of the courier service you want to select. The default courier is selected in case no id is specified.  |      10      | |    `status`    |      NO       |    *string*     |     Use this to change the courier of a shipment. Value: reassign.  Note that this can be done only once in 24 hours.    |   reassign   |
+This API can be used to assign the AWB (Air Waybill Number) to your shipment. The AWB is a unique number that helps you track the shipment and get details about it.  #### Parameters:  |  **PARAMS**  | **REQUIRED**  |  **DATA TYPE**  |                                                     **DESCRIPTION**                                                     | **EXAMPLE**  | |:-----------: |:------------: |:--------------: |:----------------------------------------------------------------------------------------------------------------------: |:-----------: | | `shipment_id`  |      YES      |    *integer*    |                              The shipment id of the order you want to create the AWB of.                                |   16016920   | |  `courier_id`  |      NO       |    *integer*    |  The courier id of the courier service you want to select. The default courier is selected in case no id is specified.  |      10      | |    `status`    |      NO       |    *string*     |     Use this to change the courier of a shipment. Value: reassign  Note that this can be done only once in 24 hours.    |   reassign   | | `is_return`  |    YES  |  *integer*  | Whether the order is return order or not. 1 in case of Yes and 0 for No.            |  1  |
 
 ### Example
 
@@ -600,8 +968,6 @@ const { status, data } = await apiInstance.v1ExternalCourierAssignAwbPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
-|**400** |  |  -  |
-|**422** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -765,9 +1131,9 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **v1ExternalCourierServiceabilityGet**
-> V1ExternalCourierServiceabilityGet200Response v1ExternalCourierServiceabilityGet()
+> object v1ExternalCourierServiceabilityGet()
 
-Use this API to check the availability of couriers between the pickup and delivery postal codes.   Further details like the estimated time of delivery, the rates along with the ids are also shown.  **Note:**  - One of either the \'order_id\' or \'cod\' and \'weight\' is required. If you specify the order id, the cod and weight fields are not required and vice versa.      - You can add further fields to add the shipment details and filter the search.       #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `pickup_postcode` | YES | _integer_ | Postcode from where the order will be picked. | 110030 | | `delivery_postcode` | YES | _integer_ | Postcode where the order will be delivered | 122002 | | `order_id` | NO | _integer_ | If order id is already created in Shiprocket panel then you can use this shiprocket order id in servicibility | 123456 | | `cod` | CONDITIONAL YES | _boolean_ | 1 for Cash on Delivery and 0 for Prepaid orders. | 1 | | `is_new_hyperlocal` | YES | _boolean_ | 1 in case of hyper-local shipments | 1 | | `lat_from` | YES | _float_ | Pickup Latitude. Mandatory in case of Hyper local shipments | 28.509223937988 | | `long_from` | YES | _float_ | Pickup Longitude. Mandatory in case of Hyper local shipments | 77.067848205566 | | `lat_to` | YES | _float_ | Delivery Latitude. Mandatory in case of Hyper local shipments | 28.50724220275879 | | `long_to` | YES | _float_ | Delivery Longitude. Mandatory in case of Hyper local shipments | 77.06745147705078 |
+Use this API to check the availability of couriers between the pickup and delivery postal codes.   Further details like the estimated time of delivery, the rates along with the ids are also shown.  **Note:**  - One of either the \'order_id\' or \'cod\' and \'weight\' is required. If you specify the order id, the cod and weight fields are not required and vice versa.      - You can add further fields to add the shipment details and filter the search.       #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `pickup_postcode` | YES | _integer_ | The shipment id of the order you want to create the AWB of. | 16016920 | | `delivery_postcode` | YES | _integer_ | The courier id of the courier service you want to select. The default courier is selected in case no id is specified. | 10 | | `order_id` | CONDITIONAL YES | _integer_ | Use this to change the courier of a shipment. Value: reassign Note that this can be done only once in 24 hours. | reassign | | `cod` | CONDITIONAL YES | _boolean_ | 1 for Cash on Delivery and 0 for Prepaid orders. | 1 | | `weight` | CONDITIONAL YES | _string_ | The weight of shipment in kgs. | 2 | | `length` | NO | _integer_ | The length of the shipment in cms. | 15 | | `breadth` | NO | _integer_ | The breadth of the shipment in cms. | 10 | | `height` | NO | _integer_ | The height of the shipment in cms. | 5 | | `declared_value` | NO | _integer_ | The price of the order shipment rupee. | 50 | | `mode` | NO | _string_ | The mode of travel. Either: Surface or Air | Air | | `is_return` | YES | _integer_ | Whether the order is return order or not. 1 in case of Yes and 0 for No | 1 | | `qc_check` | NO | _integer_ | Filter out QC couriers from the serviceability list | 1 |
 
 ### Example
 
@@ -796,7 +1162,7 @@ const { status, data } = await apiInstance.v1ExternalCourierServiceabilityGet(
 
 ### Return type
 
-**V1ExternalCourierServiceabilityGet200Response**
+**object**
 
 ### Authorization
 
@@ -812,7 +1178,6 @@ const { status, data } = await apiInstance.v1ExternalCourierServiceabilityGet(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
-|**422** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -832,9 +1197,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let awbCode: string; // (default to undefined)
 let contentType: string; // (default to undefined)
 
 const { status, data } = await apiInstance.v1ExternalCourierTrackAwbAwbCodeGet(
+    awbCode,
     contentType
 );
 ```
@@ -843,6 +1210,7 @@ const { status, data } = await apiInstance.v1ExternalCourierTrackAwbAwbCodeGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **awbCode** | [**string**] |  | defaults to undefined|
 | **contentType** | [**string**] |  | defaults to undefined|
 
 
@@ -993,9 +1361,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let shipmentId: string; // (default to undefined)
 let contentType: string; // (default to undefined)
 
 const { status, data } = await apiInstance.v1ExternalCourierTrackShipmentShipmentIdGet(
+    shipmentId,
     contentType
 );
 ```
@@ -1004,6 +1374,7 @@ const { status, data } = await apiInstance.v1ExternalCourierTrackShipmentShipmen
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **shipmentId** | [**string**] |  | defaults to undefined|
 | **contentType** | [**string**] |  | defaults to undefined|
 
 
@@ -1045,9 +1416,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let importId: string; // (default to undefined)
 let contentType: string; // (default to undefined)
 
 const { status, data } = await apiInstance.v1ExternalErrorsImportIdCheckGet(
+    importId,
     contentType
 );
 ```
@@ -1056,6 +1429,7 @@ const { status, data } = await apiInstance.v1ExternalErrorsImportIdCheckGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **importId** | [**string**] |  | defaults to undefined|
 | **contentType** | [**string**] |  | defaults to undefined|
 
 
@@ -1615,9 +1989,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let productId: string; // (default to undefined)
 let body: string; // (optional)
 
 const { status, data } = await apiInstance.v1ExternalInventoryProductIdUpdatePut(
+    productId,
     body
 );
 ```
@@ -1627,6 +2003,7 @@ const { status, data } = await apiInstance.v1ExternalInventoryProductIdUpdatePut
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **body** | **string**|  | |
+| **productId** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
@@ -1860,7 +2237,7 @@ const { status, data } = await apiInstance.v1ExternalListingsImportPost(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **v1ExternalListingsLinkPost**
-> V1ExternalAuthLoginPost403Response v1ExternalListingsLinkPost()
+> GenerateToken403Response v1ExternalListingsLinkPost()
 
 Use this API to map a product present in the channel catalogue to a product present in the master catalogue.  Pass the product and listing id for the successful call of the API  #### Parameters:  | **PARAMS**  | **REQUIRED**  | **DATA TYPE**  | **DESCRIPTION**  | **EXAMPLE**  | |:------------: |-------------- |--------------- |----------------------------------------------- |------------- | | `product_id`  | YES  | *integer*  | The id of item in the master catalog.  | 17908342  | | `listing_id`  | YES  | *integer*  | The id of the product in the channel catalog.  | 15897064  | | `ID`  | NO  | *integer*  | The id placed in the respective \'GET\' codes.  | 15897064  |
 
@@ -1891,7 +2268,7 @@ const { status, data } = await apiInstance.v1ExternalListingsLinkPost(
 
 ### Return type
 
-**V1ExternalAuthLoginPost403Response**
+**GenerateToken403Response**
 
 ### Authorization
 
@@ -2083,10 +2460,12 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let aWB: string; // (default to undefined)
 let contentType: string; // (default to undefined)
 let authorization: string; // (default to undefined)
 
 const { status, data } = await apiInstance.v1ExternalNdrAWBGet(
+    aWB,
     contentType,
     authorization
 );
@@ -2096,6 +2475,7 @@ const { status, data } = await apiInstance.v1ExternalNdrAWBGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **aWB** | [**string**] |  | defaults to undefined|
 | **contentType** | [**string**] |  | defaults to undefined|
 | **authorization** | [**string**] |  | defaults to undefined|
 
@@ -2191,9 +2571,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let awb: string; // (default to undefined)
 let body: string; // (optional)
 
 const { status, data } = await apiInstance.v1ExternalNdrAwbActionPost(
+    awb,
     body
 );
 ```
@@ -2203,6 +2585,7 @@ const { status, data } = await apiInstance.v1ExternalNdrAwbActionPost(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **body** | **string**|  | |
+| **awb** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
@@ -2487,59 +2870,6 @@ const { status, data } = await apiInstance.v1ExternalOrdersCancelShipmentAwbsPos
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **v1ExternalOrdersCreateAdhocPost**
-> V1ExternalOrdersCreateAdhocPost200Response v1ExternalOrdersCreateAdhocPost()
-
-Use this API to create a quick custom order. Quick orders are the ones where we do not store the product details in the master catalogue.  You have to pass all the required params at the minimum to create a quick custom order. You can add additional parameters as per your preference.  **Note:**  - In case the \'shipping_is_billing\' field is false, further shipping detail fields are required.       If no channel id is passed, the order will be assigned to the default custom channel. If the channel id is not known, use the \'Get All Channels\' API to get the list of all integrated channels in your Shiprocket account.  - order_id field cannot be equal to an already existing id. Doing so does not change or affect the existing order.      - New orders cannot be created with order id\'s same as that of cancelled orders. If error 422 shows up despite filling in the correct details, consider changing the order_id.      - Be sure to input the correct calculated sub_total amount. The total is not calculated automatically through the API.      - The \'order_id\' returned in the response is the Shiprocket order_id. Please save this order ID as we will use this in future API calls.       #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `order_id` | YES | _string_ | The order id you want to specify to the order. Max char: 50. (Avoid passing character values as this contradicts some other API calls). | 224477 or 224-477 | | `order_date` | YES | _string_ | The date of order creation in yyyy-mm-dd format. Time is additional. | 2019-07-24 11:11 | | `pickup_location` | YES | _string_ | The name of the pickup location added in your Shiprocket account. This cannot be a new location. | Jammu | | `channel_id` | NO | _integer_ | Mention this in case you need to assign the order to a particular channel. Deafult is \'Custom\'. | 27022 | | `comment` | NO | _string_ | Option to add \'From\' field to the shipment. To do this, enter the name in the following format: \'Reseller: \\[name\\]\'. | Reseller: Divine | | `reseller_name` | NO | _string_ | The \'from\' name if you want to print. Use \'Reseller: \\[name\\]\' | Reseller: Divine | | `company_name` | NO | _string_ | Name of the company. | Amazon | | `billing_customer_name` | YES | _string_ | First name of the billed customer. | John | | `billing_last_name` | NO | _string_ | Last name of the billed customer. | Doe | | `billing_address` | YES | _string_ | address details of the billed customer. | Civil line, House 20 | | `billing_address_2` | NO | _string_ | Further address details of the billed customer. | Near Hokage House | | `billing_city` | YES | _string_ | Billing address city. Max char: 30. | New Delhi | | `billing_pincode` | YES | _integer_ | Pincode of the billing address. | 110002 | | `billing_state` | YES | _string_ | Billing address state. | Delhi | | `billing_country` | YES | _string_ | Billing address country. | India | | `billing_email` | YES | _string_ | Email address of the billed customer. | [John@doe.com](https://mailto:John@doe.com) | | `billing_phone` | YES | _integer_ | The phone number of the billing customer. | 9856321472 | | `billing_alternate_phone` | NO | _integer_ | Alternate phone number of the billing customer. | 8604690454 | | `shipping_is_billing` | YES | _boolean_ | Whether the shipping address is the same as billing address. 1 or \'true\' for yes and 0 or \'false\' for no. | true | | `shipping_customer_name` | CONDITIONAL YES | _string_ | Name of the customer the order is shipped to. Required in case billing is not same as shipping. | Jane | | `shipping_last_name` | NO | _string_ | Last name of the shipping customer. | Doe | | `shipping_address` | CONDITIONAL YES | _string_ | Address of the Shipping customer. Required in case billing is not same as shipping. | Lane number 69 | | `shipping_address_2` | NO | _string_ | Further address details of shipping customer. | Andheri | | `billing_isd_code` | NO | _string_ | ISD code of the billing address. | +91 | | `shipping_city` | CONDITIONAL YES | _string_ | Shipping address city. | Mumbai | | `shipping_pincode` | CONDITIONAL YES | _integer_ | Shipping address pincode. | 200912 | | `shipping_country` | CONDITIONAL YES | _string_ | Shipping address country. | India | | `shipping_state` | CONDITIONAL YES | _string_ | Shipping address state. | Maharashtra | | `shipping_email` | NO | _string_ | Email of the shipping customer. | [Jane@doe.com](https://mailto:Jane@doe.com) | | `shipping_phone` | CONDITIONAL YES | _integer_ | Phone no. of the shipping customer. |  | | `longitude` | YES | _float_ | Delivery Longitude. Mandatory in case of Hyper local shipments | 77.06745147705078 | | `latitude` | YES | _float_ | Delivery Latitude. Mandatory in case of Hyper local shipments | 28.50724220275879 | | `order_items` | YES | / | List of items and their relevant fields in the form of Array. | / | | `name` | YES | _string_ | Name of the product. | Jeans | | `sku` | YES | _string_ | The sku id of the product. | cbs123 | | `units` | YES | _integer_ | No of units that are to be shipped. | 10 | | `selling_price` | YES | _integer_ | The selling price per unit in Rupee. Inclusive of GST. | 900 | | `discount` | NO | _integer_ | The discount amount in Rupee. Inclusive of tax. | 10 | | `tax` | NO | _integer_ | The tax percentage on the item. | 5 | | `hsn` | NO | _integer_ | Harmonised System Nomenclature code. Used to determine the category of taxation the goods fall under. | 44122 | | `payment_method` | YES | _string_ | The method of payment. Can be either COD (Cash on delivery) Or Prepaid. | COD | | `shipping_charges` | NO | _integer_ | Shipping charges if any in Rupee. | 5 | | `giftwrap_charges` | NO | _integer_ | Giftwrap charges if any in Rupee. | 5 | | `transaction_charges` | NO | _integer_ | Transaction charges if any in Rupee. | 5 | | `total_discount` | NO | _integer_ | The total discount amount in Rupee. | 15 | | `sub_total` | YES | _integer_ | Calculated sub total amount in Rupee after deductions. | 9010 | | `length` | YES | _float_ | The length of the item in cms. Must be more than 0.5. | 10 | | `breadth` | YES | _float_ | The breadth of the item in cms. Must be more than 0.5. | 10 | | `height` | YES | _float_ | The height of the item in cms. Must be more than 0.5. | 10 | | `weight` | YES | _float_ | The weight of the item in kgs. Must be more than 0. | 2.5 | | `ewaybill_no` | NO | _string_ | Details relating to the shipment of goods. . | K92373490 | | `customer_gstin` | NO | _string_ | Goods and Services Tax Identification Number. | 29ABCDE1234F2Z5 | | `invoice_number` | NO | _string_ |  |  | | `order_type` | NO | _string_ | Key to differentiate between Essentials or Non Essentials Shipments. Order type can only be ESSENTIALS or NON ESSENTIALS. Please note it is case sensitive and blank values are allowed. | ESSENTIALS | | `checkout_shipping_method` | NO | _string_ | Only for SRF users. | a. SR_RUSH: SDD, NDD  <br>b. SR_STANDARD: Surface Delivery  <br>c. SR_EXPRESS: Air Delivery  <br>d. SR_QUICK: 3 hrs delivery | | `what3words_address` | NO | _string_ | What3words is a proprietary geocode system designed to identify any location on the surface of Earth with a resolution of about 3 meters. The system encodes geographic coordinates into three permanently fixed dictionary words. | toddler.geologist.animated | | `is_insurance_opt` | NO | _boolean_ | To secure shipments above the order value of Rs 2500 | true | | `is_document` | NO | _integer_ | To create a document order | 1 or 0 | | `shipping_method` | YES | _string_ | Shipping method use HL in case of Hyper local shipments | HL |
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let body: string; // (optional)
-
-const { status, data } = await apiInstance.v1ExternalOrdersCreateAdhocPost(
-    body
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **body** | **string**|  | |
-
-
-### Return type
-
-**V1ExternalOrdersCreateAdhocPost200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: text/plain
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-|**400** |  |  -  |
-|**422** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **v1ExternalOrdersCreateExchangePost**
 > V1ExternalOrdersCreateExchangePost200Response v1ExternalOrdersCreateExchangePost()
 
@@ -2770,9 +3100,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
-let body: string; // (optional)
+let contentType: string; // (default to undefined)
+let body: object; // (optional)
 
 const { status, data } = await apiInstance.v1ExternalOrdersExportPost(
+    contentType,
     body
 );
 ```
@@ -2781,7 +3113,8 @@ const { status, data } = await apiInstance.v1ExternalOrdersExportPost(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **body** | **string**|  | |
+| **body** | **object**|  | |
+| **contentType** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
@@ -2794,7 +3127,7 @@ const { status, data } = await apiInstance.v1ExternalOrdersExportPost(
 
 ### HTTP request headers
 
- - **Content-Type**: text/plain
+ - **Content-Type**: application/json
  - **Accept**: application/json, */*
 
 
@@ -2847,60 +3180,6 @@ const { status, data } = await apiInstance.v1ExternalOrdersFulfillPatch(
 ### HTTP request headers
 
  - **Content-Type**: text/plain
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalOrdersGet**
-> V1ExternalOrdersGet200Response v1ExternalOrdersGet()
-
-This API call will display a list of all created and available orders in your Shiprocket account. The product and shipment details are displayed as sub-arrays within each order detail.  You can also sort and filter the data according to your needs by passing the optional parameters. Not passing anything will display the data in the default format.  You can also fetch the data based on the order update date. PFB the validations:  ``` 1. if updated_to => passed and updated_from not passed =>, error will come => Please send update_from date along with update_to date 2. if updated_from => passed and updated_to => paased => and from-to > 30 then error => Difference between updated_from and update_to date should not be greater than 30 days. 3. if updated_From < 30 then error => Updated_from date should not be less than 30 days from current date   ```  #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `page` | NO | _integer_ | The page number to display. | 5 | | `per_page` | NO | _integer_ | The number of entries per page. | 5 | | `sort` | NO | _string_ | Sort conditions: ASC or DESC | ASC | | `sort_by` | NO | _string_ | The Field to sort by: id or status | id | | `to` | NO | _string_ | The end date. | 2018-07-24 | | `from` | NO | _string_ | The start date. | 2019-07-24 | | `filter_by` | NO | _string_ | Field to filter by. | status, payment_method, delivery_country, channel_order_id | | `filter` | NO | _string_ | Value of the field |  | | `search` | NO | _string_ | Search for AWB or by Channel order_id (order id specified by you). | 224477 | | `pickup_location` | NO | _string_ | Search Orders on the basis of pickup location. | xyz | | `channel_id` | NO | _integer_ | Channel ID Returned in Get Integrated Channels API | 123 | | `fbs` | NO | _integer_ | Use this filter if you want to view and filter the SRF orders | 0 or 1 |
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let contentType: string; // (default to undefined)
-let authorization: string; // (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalOrdersGet(
-    contentType,
-    authorization
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | [**string**] |  | defaults to undefined|
-| **authorization** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-**V1ExternalOrdersGet200Response**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
  - **Accept**: application/json
 
 
@@ -3069,173 +3348,6 @@ const { status, data } = await apiInstance.v1ExternalOrdersPrintInvoicePost(
 |**200** |  |  -  |
 |**400** |  |  -  |
 |**500** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalOrdersProcessingReturnGet**
-> V1ExternalOrdersProcessingReturnGet200Response v1ExternalOrdersProcessingReturnGet()
-
-Using this API, you can get a list of all created return orders in your Shiprocket account, along with their details.  No parameters are required to use the API. However, further parameters can be defined to sort and filter the data.  #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `page` | NO | _integer_ | The page number to display. | 1 | | `per_page` | NO | _integer_ | The number of orders per page. | 2 | | `to` | NO | _string_ | Ending date of search. | 2019-08-04 | | `from` | NO | _string_ | Starting date of search. | 2019-08-05 |
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let contentType: string; // (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalOrdersProcessingReturnGet(
-    contentType
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-**V1ExternalOrdersProcessingReturnGet200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-|**404** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalOrdersShowGet**
-> V1ExternalOrdersShowIdGet200Response v1ExternalOrdersShowGet()
-
-Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let contentType: string; // (default to undefined)
-let authorization: string; // (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalOrdersShowGet(
-    contentType,
-    authorization
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | [**string**] |  | defaults to undefined|
-| **authorization** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-**V1ExternalOrdersShowIdGet200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-|**400** |  |  -  |
-|**404** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalOrdersShowIdGet**
-> V1ExternalOrdersShowIdGet200Response v1ExternalOrdersShowIdGet()
-
-Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let id: string; // (default to undefined)
-let contentType: string; // (default to undefined)
-let authorization: string; // (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalOrdersShowIdGet(
-    id,
-    contentType,
-    authorization
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **id** | [**string**] |  | defaults to undefined|
-| **contentType** | [**string**] |  | defaults to undefined|
-| **authorization** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-**V1ExternalOrdersShowIdGet200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-|**400** |  |  -  |
-|**404** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3465,11 +3577,13 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let productID: string; // (default to undefined)
 let contentType: string; // (default to undefined)
 let authorization: string; // (optional) (default to undefined)
 let v1ExternalProductsQcProductUpdateProductIDPostRequest: V1ExternalProductsQcProductUpdateProductIDPostRequest; // (optional)
 
 const { status, data } = await apiInstance.v1ExternalProductsQcProductUpdateProductIDPost(
+    productID,
     contentType,
     authorization,
     v1ExternalProductsQcProductUpdateProductIDPostRequest
@@ -3481,6 +3595,7 @@ const { status, data } = await apiInstance.v1ExternalProductsQcProductUpdateProd
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **v1ExternalProductsQcProductUpdateProductIDPostRequest** | **V1ExternalProductsQcProductUpdateProductIDPostRequest**|  | |
+| **productID** | [**string**] |  | defaults to undefined|
 | **contentType** | [**string**] |  | defaults to undefined|
 | **authorization** | [**string**] |  | (optional) defaults to undefined|
 
@@ -3574,9 +3689,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
+let productId: string; // (default to undefined)
 let contentType: string; // (default to undefined)
 
 const { status, data } = await apiInstance.v1ExternalProductsShowProductIdGet(
+    productId,
     contentType
 );
 ```
@@ -3585,6 +3702,7 @@ const { status, data } = await apiInstance.v1ExternalProductsShowProductIdGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **productId** | [**string**] |  | defaults to undefined|
 | **contentType** | [**string**] |  | defaults to undefined|
 
 
@@ -3614,7 +3732,7 @@ const { status, data } = await apiInstance.v1ExternalProductsShowProductIdGet(
 # **v1ExternalSettingsCompanyAddpickupPost**
 > V1ExternalSettingsCompanyAddpickupPost200Response v1ExternalSettingsCompanyAddpickupPost()
 
-This API can be used to add a new pickup location to your account.   Pass the minimum required parameters to add the location.   Further details to the address can be added if required.  #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `pickup_location` | YES | _string_ | The nickname of the new pickup location. Max 36 characters. | Home | | `name` | YES | _string_ | The shipper\'s name. | Deadpool | | `email` | YES | _string_ | The shipper\'s email address. | [deadpool@chimichanga.com](https://mailto:deadpool@chimichanga.com) | | `phone` | YES | _integer_ | Shipper\'s phone number. | 9777777779 | | `address` | YES | _string_ | Shipper\'s primary address. Max 80 characters. | Mutant Facility, Sector 3 | | `address_2` | NO | _string_ | Additional address details. | House number 34 | | `city` | YES | _string_ | Pickup location city name. | Pune | | `state` | YES | _string_ | Pickup location state name. | Maharashtra | | `country` | YES | _string_ | Pickup location country. | India | | `pin_code` | YES | _integer_ | Pickup location pincode. | 110022 | | `lat` | YES | _float_ | Pickup location Latitude. | 22.4064 | | `long` | YES | _float_ | Pickup location Longitude. | 69.0747 | | `address_type` | NO | _string_ | To be given if address of different vendor is to be provided with pickup address | vendor | | `vendor_name` | NO | _string_ | Name of vendor if address_type is vendor | John | | `gstin` | NO | _string_ | gstin of vendor | 09XXXCH7409R1XXX |
+This API can be used to add a new pickup location to your account.   Pass the minimum required parameters to add the location.   Further details to the address can be added if required.  #### Parameters:  | **PARAMS** | **REQUIRED** | **DATA TYPE** | **DESCRIPTION** | **EXAMPLE** | | --- | --- | --- | --- | --- | | `pickup_location` | YES | _string_ | The nickname of the new pickup location. Max 36 characters. | Home | | `name` | YES | _string_ | The shipper\'s name. | Deadpool | | `email` | YES | _string_ | The shipper\'s email address. | [deadpool@chimichanga.com](mailto:deadpool@chimichanga.com) | | `phone` | YES | _integer_ | Shipper\'s phone number. | 9777777779 | | `address` | YES | _string_ | Shipper\'s primary address. Max 80 characters. | Mutant Facility, Sector 3 | | `address_2` | NO | _string_ | Additional address details. | House number 34 | | `city` | YES | _string_ | Pickup location city name. | Pune | | `state` | YES | _string_ | Pickup location state name. | Maharashtra | | `country` | YES | _string_ | Pickup location country. | India | | `pin_code` | YES | _integer_ | Pickup location pincode. | 110022 | | `lat` | NO | _float_ | Pickup location Latitude. | 22.4064 | | `long` | NO | _float_ | Pickup location Longitude. | 69.0747 | | `address_type` | NO | _string_ | To be given if address of different vendor is to be provided with pickup address | vendor | | `vendor_name` | NO | _string_ | Name of vendor if address_type is vendor | John | | `gstin` | NO | _string_ | gstin of vendor | 09XXXCH7409R1XXX  <br> |
 
 ### Example
 
@@ -3808,58 +3926,6 @@ const { status, data } = await apiInstance.v1ExternalShipmentsCreateReturnShipme
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalShipmentsGet**
-> V1ExternalShipmentsGet200Response v1ExternalShipmentsGet()
-
-Get the details of a specific Shipment by passing the value of shipment_id in the endpoint URL. No other body parameters are required.  #### Path:  |          **EXAMPLE**          | |:----------------------------: | |  https://apiv2.shiprocket.in/v1/external/shipments/16016920  |
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let contentType: string; // (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalShipmentsGet(
-    contentType
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-**V1ExternalShipmentsGet200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-|**404** |  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
