@@ -1,4 +1,4 @@
-# V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
+# GetRemittanceInfo200ResponseDataInner
 
 
 ## Properties
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **maintained_balance_limit** | **any** |  | [default to undefined]
 **status** | **string** |  | [default to undefined]
 **remarks** | **string** |  | [default to undefined]
-**adjustment_data** | [**V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData**](V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData.md) |  | [default to undefined]
+**adjustment_data** | [**GetRemittanceInfo200ResponseDataInnerAdjustmentData**](GetRemittanceInfo200ResponseDataInnerAdjustmentData.md) |  | [default to undefined]
 **legal_penal_amount** | **string** |  | [default to undefined]
 **legal_penal_invoices** | **Array&lt;string&gt;** |  | [default to undefined]
 **remitted_value_icod** | **string** |  | [default to undefined]
@@ -26,14 +26,14 @@ Name | Type | Description | Notes
 **icod_vrf_id** | **any** |  | [default to undefined]
 **vrf_ids** | **string** |  | [default to undefined]
 **vrf_utr** | **string** |  | [default to undefined]
-**remittance_amount** | [**Array&lt;V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner&gt;**](V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner.md) |  | [default to undefined]
+**remittance_amount** | [**Array&lt;GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner&gt;**](GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner.md) |  | [default to undefined]
 
 ## Example
 
 ```typescript
-import { V1ExternalAccountDetailsRemittanceGet200ResponseDataInner } from './api';
+import { GetRemittanceInfo200ResponseDataInner } from './api';
 
-const instance: V1ExternalAccountDetailsRemittanceGet200ResponseDataInner = {
+const instance: GetRemittanceInfo200ResponseDataInner = {
     created_at,
     crf_id,
     utr,

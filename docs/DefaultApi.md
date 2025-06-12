@@ -8,12 +8,12 @@ All URIs are relative to *https://apiv2.shiprocket.in*
 |[**generateToken**](#generatetoken) | **POST** /v1/external/auth/login | Generate Token|
 |[**getAllOrders**](#getallorders) | **GET** /v1/external/orders | Get all Orders|
 |[**getAllReturnOrders**](#getallreturnorders) | **GET** /v1/external/orders/processing/return | Get All Return Orders|
+|[**getRemittanceInfo**](#getremittanceinfo) | **GET** /v1/external/account/details/remittance | Get Remittence Info|
 |[**getSpecificOrderDetails**](#getspecificorderdetails) | **GET** /v1/external/orders/show/{id} | Get Specific Order Details|
 |[**getSpecificShipmentDetails**](#getspecificshipmentdetails) | **GET** /v1/external/shipments | Get Details of Specific Shipment|
 |[**getWalletBalance**](#getwalletbalance) | **GET** /v1/external/account/details/wallet-balance | Get Wallet Balance|
 |[**logout**](#logout) | **POST** /v1/external/auth/logout | Token Logout|
 |[**search**](#search) | **GET** /v1/global/search | Global Search|
-|[**v1ExternalAccountDetailsRemittanceGet**](#v1externalaccountdetailsremittanceget) | **GET** /v1/external/account/details/remittance | Get Remittence Info|
 |[**v1ExternalAccountDetailsStatementGet**](#v1externalaccountdetailsstatementget) | **GET** /v1/external/account/details/statement | Get Statement Details|
 |[**v1ExternalBillingDiscrepancyGet**](#v1externalbillingdiscrepancyget) | **GET** /v1/external/billing/discrepancy | Get Dicrepancy Data|
 |[**v1ExternalChannelsGet**](#v1externalchannelsget) | **GET** /v1/external/channels | Get Integrated Channel Details|
@@ -349,6 +349,66 @@ const { status, data } = await apiInstance.getAllReturnOrders(
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getRemittanceInfo**
+> GetRemittanceInfo200Response getRemittanceInfo()
+
+Use this API to get the Remittance details of your Shiprocket account.
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let from: string; // (optional) (default to undefined)
+let to: string; // (optional) (default to undefined)
+let page: number; //Page Number (optional) (default to undefined)
+let perPage: number; //No of records in a single requests (optional) (default to undefined)
+
+const { status, data } = await apiInstance.getRemittanceInfo(
+    from,
+    to,
+    page,
+    perPage
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **from** | [**string**] |  | (optional) defaults to undefined|
+| **to** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] | Page Number | (optional) defaults to undefined|
+| **perPage** | [**number**] | No of records in a single requests | (optional) defaults to undefined|
+
+
+### Return type
+
+**GetRemittanceInfo200Response**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **getSpecificOrderDetails**
 > GetSpecificOrderDetails200Response getSpecificOrderDetails()
 
@@ -582,63 +642,6 @@ const { status, data } = await apiInstance.search(
 ### Return type
 
 **Search200Response**
-
-### Authorization
-
-[bearer](../README.md#bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v1ExternalAccountDetailsRemittanceGet**
-> V1ExternalAccountDetailsRemittanceGet200Response v1ExternalAccountDetailsRemittanceGet()
-
-Use this API to get the Remittance details of your Shiprocket account.
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let contentType: string; // (default to undefined)
-let from: string; // (optional) (default to undefined)
-let to: string; // (optional) (default to undefined)
-
-const { status, data } = await apiInstance.v1ExternalAccountDetailsRemittanceGet(
-    contentType,
-    from,
-    to
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | [**string**] |  | defaults to undefined|
-| **from** | [**string**] |  | (optional) defaults to undefined|
-| **to** | [**string**] |  | (optional) defaults to undefined|
-
-
-### Return type
-
-**V1ExternalAccountDetailsRemittanceGet200Response**
 
 ### Authorization
 

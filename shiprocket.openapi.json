@@ -14210,6 +14210,7 @@
         "summary": "Get Remittence Info",
         "deprecated": false,
         "description": "Use this API to get the Remittance details of your Shiprocket account.",
+        "operationId": "getRemittanceInfo",
         "tags": [],
         "parameters": [
           {
@@ -14233,13 +14234,23 @@
             }
           },
           {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "application/json",
+            "name": "page",
+            "in": "query",
+            "description": "Page Number",
+            "required": false,
+            "example": 1,
             "schema": {
-              "type": "string"
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "No of records in a single requests",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
             }
           }
         ],

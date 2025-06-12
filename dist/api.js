@@ -248,6 +248,50 @@ const DefaultApiAxiosParamCreator = function (configuration) {
             };
         }),
         /**
+         * Use this API to get the Remittance details of your Shiprocket account.
+         * @summary Get Remittence Info
+         * @param {string} [from]
+         * @param {string} [to]
+         * @param {number} [page] Page Number
+         * @param {number} [perPage] No of records in a single requests
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRemittanceInfo: (from_1, to_1, page_1, perPage_1, ...args_1) => __awaiter(this, [from_1, to_1, page_1, perPage_1, ...args_1], void 0, function* (from, to, page, perPage, options = {}) {
+            const localVarPath = `/v1/external/account/details/remittance`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarHeaderParameter = {};
+            const localVarQueryParameter = {};
+            // authentication bearer required
+            // http bearer authentication required
+            yield (0, common_1.setBearerAuthToObject)(localVarHeaderParameter, configuration);
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = from;
+            }
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = to;
+            }
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+            if (perPage !== undefined) {
+                localVarQueryParameter['per_page'] = perPage;
+            }
+            (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            return {
+                url: (0, common_1.toPathString)(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        }),
+        /**
          * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
          * @summary Get Specific Order Details
          * @param {string} id
@@ -398,48 +442,6 @@ const DefaultApiAxiosParamCreator = function (configuration) {
             yield (0, common_1.setBearerAuthToObject)(localVarHeaderParameter, configuration);
             if (queryString !== undefined) {
                 localVarQueryParameter['query_string'] = queryString;
-            }
-            (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: (0, common_1.toPathString)(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        }),
-        /**
-         * Use this API to get the Remittance details of your Shiprocket account.
-         * @summary Get Remittence Info
-         * @param {string} contentType
-         * @param {string} [from]
-         * @param {string} [to]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ExternalAccountDetailsRemittanceGet: (contentType_1, from_1, to_1, ...args_1) => __awaiter(this, [contentType_1, from_1, to_1, ...args_1], void 0, function* (contentType, from, to, options = {}) {
-            // verify required parameter 'contentType' is not null or undefined
-            (0, common_1.assertParamExists)('v1ExternalAccountDetailsRemittanceGet', 'contentType', contentType);
-            const localVarPath = `/v1/external/account/details/remittance`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication bearer required
-            // http bearer authentication required
-            yield (0, common_1.setBearerAuthToObject)(localVarHeaderParameter, configuration);
-            if (from !== undefined) {
-                localVarQueryParameter['from'] = from;
-            }
-            if (to !== undefined) {
-                localVarQueryParameter['to'] = to;
-            }
-            if (contentType != null) {
-                localVarHeaderParameter['Content-Type'] = String(contentType);
             }
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -2657,6 +2659,25 @@ const DefaultApiFp = function (configuration) {
             });
         },
         /**
+         * Use this API to get the Remittance details of your Shiprocket account.
+         * @summary Get Remittence Info
+         * @param {string} [from]
+         * @param {string} [to]
+         * @param {number} [page] Page Number
+         * @param {number} [perPage] No of records in a single requests
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRemittanceInfo(from, to, page, perPage, options) {
+            return __awaiter(this, void 0, void 0, function* () {
+                var _a, _b, _c;
+                const localVarAxiosArgs = yield localVarAxiosParamCreator.getRemittanceInfo(from, to, page, perPage, options);
+                const localVarOperationServerIndex = (_a = configuration === null || configuration === void 0 ? void 0 : configuration.serverIndex) !== null && _a !== void 0 ? _a : 0;
+                const localVarOperationServerBasePath = (_c = (_b = base_1.operationServerMap['DefaultApi.getRemittanceInfo']) === null || _b === void 0 ? void 0 : _b[localVarOperationServerIndex]) === null || _c === void 0 ? void 0 : _c.url;
+                return (axios, basePath) => (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+            });
+        },
+        /**
          * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
          * @summary Get Specific Order Details
          * @param {string} id
@@ -2732,24 +2753,6 @@ const DefaultApiFp = function (configuration) {
                 const localVarAxiosArgs = yield localVarAxiosParamCreator.search(queryString, options);
                 const localVarOperationServerIndex = (_a = configuration === null || configuration === void 0 ? void 0 : configuration.serverIndex) !== null && _a !== void 0 ? _a : 0;
                 const localVarOperationServerBasePath = (_c = (_b = base_1.operationServerMap['DefaultApi.search']) === null || _b === void 0 ? void 0 : _b[localVarOperationServerIndex]) === null || _c === void 0 ? void 0 : _c.url;
-                return (axios, basePath) => (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-            });
-        },
-        /**
-         * Use this API to get the Remittance details of your Shiprocket account.
-         * @summary Get Remittence Info
-         * @param {string} contentType
-         * @param {string} [from]
-         * @param {string} [to]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                var _a, _b, _c;
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options);
-                const localVarOperationServerIndex = (_a = configuration === null || configuration === void 0 ? void 0 : configuration.serverIndex) !== null && _a !== void 0 ? _a : 0;
-                const localVarOperationServerBasePath = (_c = (_b = base_1.operationServerMap['DefaultApi.v1ExternalAccountDetailsRemittanceGet']) === null || _b === void 0 ? void 0 : _b[localVarOperationServerIndex]) === null || _c === void 0 ? void 0 : _c.url;
                 return (axios, basePath) => (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
             });
         },
@@ -3837,6 +3840,19 @@ const DefaultApiFactory = function (configuration, basePath, axios) {
             return localVarFp.getAllReturnOrders(authorization, sort, sortBy, to, from, filterBy, filter, search, pickupLocation, channelId, page, perPage, options).then((request) => request(axios, basePath));
         },
         /**
+         * Use this API to get the Remittance details of your Shiprocket account.
+         * @summary Get Remittence Info
+         * @param {string} [from]
+         * @param {string} [to]
+         * @param {number} [page] Page Number
+         * @param {number} [perPage] No of records in a single requests
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRemittanceInfo(from, to, page, perPage, options) {
+            return localVarFp.getRemittanceInfo(from, to, page, perPage, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
          * @summary Get Specific Order Details
          * @param {string} id
@@ -3884,18 +3900,6 @@ const DefaultApiFactory = function (configuration, basePath, axios) {
          */
         search(queryString, options) {
             return localVarFp.search(queryString, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Use this API to get the Remittance details of your Shiprocket account.
-         * @summary Get Remittence Info
-         * @param {string} contentType
-         * @param {string} [from]
-         * @param {string} [to]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options) {
-            return localVarFp.v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options).then((request) => request(axios, basePath));
         },
         /**
          * Use this API to get the account statement details of your Shiprocket account. No parameters are required to access this API. However, you sort and filter the data displayed using the optional parameters.  #### Parameters:  | **PARAMS**  | **REQUIRED**  |  **DATA TYPE**  |              **DESCRIPTION**              | **EXAMPLE**  | |:----------: |:------------: |:--------------: |:----------------------------------------: |:-----------: | |   ` page`     |      NO       |    *integer*    |   The page number you want to display.    |      5       | | `per_page`  |      NO       |    *integer*    | The number of orders to get per request.  |      2       | |    `from`     |      NO       |    *string*     |           From a specific date.           |  2017-08-12  | |     `to`      |      NO       |    *string*     |            To a specific date.            |  2017-09-12  |
@@ -4613,6 +4617,20 @@ class DefaultApi extends base_1.BaseAPI {
         return (0, exports.DefaultApiFp)(this.configuration).getAllReturnOrders(authorization, sort, sortBy, to, from, filterBy, filter, search, pickupLocation, channelId, page, perPage, options).then((request) => request(this.axios, this.basePath));
     }
     /**
+     * Use this API to get the Remittance details of your Shiprocket account.
+     * @summary Get Remittence Info
+     * @param {string} [from]
+     * @param {string} [to]
+     * @param {number} [page] Page Number
+     * @param {number} [perPage] No of records in a single requests
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    getRemittanceInfo(from, to, page, perPage, options) {
+        return (0, exports.DefaultApiFp)(this.configuration).getRemittanceInfo(from, to, page, perPage, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
      * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
      * @summary Get Specific Order Details
      * @param {string} id
@@ -4665,19 +4683,6 @@ class DefaultApi extends base_1.BaseAPI {
      */
     search(queryString, options) {
         return (0, exports.DefaultApiFp)(this.configuration).search(queryString, options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     * Use this API to get the Remittance details of your Shiprocket account.
-     * @summary Get Remittence Info
-     * @param {string} contentType
-     * @param {string} [from]
-     * @param {string} [to]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options) {
-        return (0, exports.DefaultApiFp)(this.configuration).v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * Use this API to get the account statement details of your Shiprocket account. No parameters are required to access this API. However, you sort and filter the data displayed using the optional parameters.  #### Parameters:  | **PARAMS**  | **REQUIRED**  |  **DATA TYPE**  |              **DESCRIPTION**              | **EXAMPLE**  | |:----------: |:------------: |:--------------: |:----------------------------------------: |:-----------: | |   ` page`     |      NO       |    *integer*    |   The page number you want to display.    |      5       | | `per_page`  |      NO       |    *integer*    | The number of orders to get per request.  |      2       | |    `from`     |      NO       |    *string*     |           From a specific date.           |  2017-08-12  | |     `to`      |      NO       |    *string*     |            To a specific date.            |  2017-09-12  |

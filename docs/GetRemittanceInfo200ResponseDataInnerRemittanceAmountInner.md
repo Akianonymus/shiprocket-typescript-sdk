@@ -1,4 +1,4 @@
-# V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner
+# GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner
 
 
 ## Properties
@@ -13,9 +13,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner } from './api';
+import { GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner } from './api';
 
-const instance: V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner = {
+const instance: GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner = {
     key,
     amount,
     currency,

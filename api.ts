@@ -1035,6 +1035,233 @@ export interface GetAllReturnOrders200ResponseMetaPaginationLinks {
 /**
  * 
  * @export
+ * @interface GetRemittanceInfo200Response
+ */
+export interface GetRemittanceInfo200Response {
+    /**
+     * 
+     * @type {Array<GetRemittanceInfo200ResponseDataInner>}
+     * @memberof GetRemittanceInfo200Response
+     */
+    'data': Array<GetRemittanceInfo200ResponseDataInner>;
+    /**
+     * 
+     * @type {GetRemittanceInfo200ResponseMeta}
+     * @memberof GetRemittanceInfo200Response
+     */
+    'meta': GetRemittanceInfo200ResponseMeta;
+}
+/**
+ * 
+ * @export
+ * @interface GetRemittanceInfo200ResponseDataInner
+ */
+export interface GetRemittanceInfo200ResponseDataInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'crf_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'utr': string;
+    /**
+     * 
+     * @type {any}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'utr_icod': any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'recharge_value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'reversal_value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'remitted_value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'deduction_value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'cod_payble': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'account_type': string;
+    /**
+     * 
+     * @type {any}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'maintained_balance_limit': any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'remarks': string;
+    /**
+     * 
+     * @type {GetRemittanceInfo200ResponseDataInnerAdjustmentData}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'adjustment_data': GetRemittanceInfo200ResponseDataInnerAdjustmentData;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'legal_penal_amount': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'legal_penal_invoices': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'remitted_value_icod': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'remitted_value_std': number;
+    /**
+     * 
+     * @type {any}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'icod_vrf_id': any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'vrf_ids': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'vrf_utr': string;
+    /**
+     * 
+     * @type {Array<GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner>}
+     * @memberof GetRemittanceInfo200ResponseDataInner
+     */
+    'remittance_amount': Array<GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GetRemittanceInfo200ResponseDataInnerAdjustmentData
+ */
+export interface GetRemittanceInfo200ResponseDataInnerAdjustmentData {
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRemittanceInfo200ResponseDataInnerAdjustmentData
+     */
+    'adjusted_amount': number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GetRemittanceInfo200ResponseDataInnerAdjustmentData
+     */
+    'details': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner
+ */
+export interface GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner
+     */
+    'key': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner
+     */
+    'amount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner
+     */
+    'currency': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRemittanceInfo200ResponseDataInnerRemittanceAmountInner
+     */
+    'utr': string;
+}
+/**
+ * 
+ * @export
+ * @interface GetRemittanceInfo200ResponseMeta
+ */
+export interface GetRemittanceInfo200ResponseMeta {
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRemittanceInfo200ResponseMeta
+     */
+    'remitance_count': number;
+    /**
+     * 
+     * @type {GetAllOrders200ResponseMetaPagination}
+     * @memberof GetRemittanceInfo200ResponseMeta
+     */
+    'pagination': GetAllOrders200ResponseMetaPagination;
+}
+/**
+ * 
+ * @export
  * @interface GetSpecificOrderDetails200Response
  */
 export interface GetSpecificOrderDetails200Response {
@@ -3220,233 +3447,6 @@ export interface Search200ResponseDataChannelOrderIdInner {
      * @memberof Search200ResponseDataChannelOrderIdInner
      */
     'id'?: string;
-}
-/**
- * 
- * @export
- * @interface V1ExternalAccountDetailsRemittanceGet200Response
- */
-export interface V1ExternalAccountDetailsRemittanceGet200Response {
-    /**
-     * 
-     * @type {Array<V1ExternalAccountDetailsRemittanceGet200ResponseDataInner>}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200Response
-     */
-    'data': Array<V1ExternalAccountDetailsRemittanceGet200ResponseDataInner>;
-    /**
-     * 
-     * @type {V1ExternalAccountDetailsRemittanceGet200ResponseMeta}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200Response
-     */
-    'meta': V1ExternalAccountDetailsRemittanceGet200ResponseMeta;
-}
-/**
- * 
- * @export
- * @interface V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
- */
-export interface V1ExternalAccountDetailsRemittanceGet200ResponseDataInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'created_at': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'crf_id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'utr': string;
-    /**
-     * 
-     * @type {any}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'utr_icod': any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'recharge_value': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'reversal_value': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'remitted_value': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'deduction_value': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'cod_payble': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'account_type': string;
-    /**
-     * 
-     * @type {any}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'maintained_balance_limit': any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'status': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'remarks': string;
-    /**
-     * 
-     * @type {V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'adjustment_data': V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'legal_penal_amount': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'legal_penal_invoices': Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'remitted_value_icod': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'remitted_value_std': number;
-    /**
-     * 
-     * @type {any}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'icod_vrf_id': any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'vrf_ids': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'vrf_utr': string;
-    /**
-     * 
-     * @type {Array<V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner>}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInner
-     */
-    'remittance_amount': Array<V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner>;
-}
-/**
- * 
- * @export
- * @interface V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData
- */
-export interface V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData
-     */
-    'adjusted_amount': number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerAdjustmentData
-     */
-    'details': Array<string>;
-}
-/**
- * 
- * @export
- * @interface V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner
- */
-export interface V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner
-     */
-    'key': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner
-     */
-    'amount': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner
-     */
-    'currency': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseDataInnerRemittanceAmountInner
-     */
-    'utr': string;
-}
-/**
- * 
- * @export
- * @interface V1ExternalAccountDetailsRemittanceGet200ResponseMeta
- */
-export interface V1ExternalAccountDetailsRemittanceGet200ResponseMeta {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseMeta
-     */
-    'remitance_count': number;
-    /**
-     * 
-     * @type {GetAllOrders200ResponseMetaPagination}
-     * @memberof V1ExternalAccountDetailsRemittanceGet200ResponseMeta
-     */
-    'pagination': GetAllOrders200ResponseMetaPagination;
 }
 /**
  * 
@@ -11337,6 +11337,60 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Use this API to get the Remittance details of your Shiprocket account.
+         * @summary Get Remittence Info
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {number} [page] Page Number
+         * @param {number} [perPage] No of records in a single requests
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRemittanceInfo: async (from?: string, to?: string, page?: number, perPage?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/external/account/details/remittance`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = to;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (perPage !== undefined) {
+                localVarQueryParameter['per_page'] = perPage;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
          * @summary Get Specific Order Details
          * @param {string} id 
@@ -11518,56 +11572,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Use this API to get the Remittance details of your Shiprocket account.
-         * @summary Get Remittence Info
-         * @param {string} contentType 
-         * @param {string} [from] 
-         * @param {string} [to] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ExternalAccountDetailsRemittanceGet: async (contentType: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contentType' is not null or undefined
-            assertParamExists('v1ExternalAccountDetailsRemittanceGet', 'contentType', contentType)
-            const localVarPath = `/v1/external/account/details/remittance`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (from !== undefined) {
-                localVarQueryParameter['from'] = from;
-            }
-
-            if (to !== undefined) {
-                localVarQueryParameter['to'] = to;
-            }
-
-
-    
-            if (contentType != null) {
-                localVarHeaderParameter['Content-Type'] = String(contentType);
-            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -14187,6 +14191,22 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Use this API to get the Remittance details of your Shiprocket account.
+         * @summary Get Remittence Info
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {number} [page] Page Number
+         * @param {number} [perPage] No of records in a single requests
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRemittanceInfo(from?: string, to?: string, page?: number, perPage?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetRemittanceInfo200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRemittanceInfo(from, to, page, perPage, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getRemittanceInfo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
          * @summary Get Specific Order Details
          * @param {string} id 
@@ -14248,21 +14268,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.search(queryString, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.search']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Use this API to get the Remittance details of your Shiprocket account.
-         * @summary Get Remittence Info
-         * @param {string} contentType 
-         * @param {string} [from] 
-         * @param {string} [to] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1ExternalAccountDetailsRemittanceGet(contentType: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<V1ExternalAccountDetailsRemittanceGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.v1ExternalAccountDetailsRemittanceGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -15163,6 +15168,19 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getAllReturnOrders(authorization, sort, sortBy, to, from, filterBy, filter, search, pickupLocation, channelId, page, perPage, options).then((request) => request(axios, basePath));
         },
         /**
+         * Use this API to get the Remittance details of your Shiprocket account.
+         * @summary Get Remittence Info
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {number} [page] Page Number
+         * @param {number} [perPage] No of records in a single requests
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRemittanceInfo(from?: string, to?: string, page?: number, perPage?: number, options?: RawAxiosRequestConfig): AxiosPromise<GetRemittanceInfo200Response> {
+            return localVarFp.getRemittanceInfo(from, to, page, perPage, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
          * @summary Get Specific Order Details
          * @param {string} id 
@@ -15210,18 +15228,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         search(queryString?: string, options?: RawAxiosRequestConfig): AxiosPromise<Search200Response> {
             return localVarFp.search(queryString, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Use this API to get the Remittance details of your Shiprocket account.
-         * @summary Get Remittence Info
-         * @param {string} contentType 
-         * @param {string} [from] 
-         * @param {string} [to] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ExternalAccountDetailsRemittanceGet(contentType: string, from?: string, to?: string, options?: RawAxiosRequestConfig): AxiosPromise<V1ExternalAccountDetailsRemittanceGet200Response> {
-            return localVarFp.v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options).then((request) => request(axios, basePath));
         },
         /**
          * Use this API to get the account statement details of your Shiprocket account. No parameters are required to access this API. However, you sort and filter the data displayed using the optional parameters.  #### Parameters:  | **PARAMS**  | **REQUIRED**  |  **DATA TYPE**  |              **DESCRIPTION**              | **EXAMPLE**  | |:----------: |:------------: |:--------------: |:----------------------------------------: |:-----------: | |   ` page`     |      NO       |    *integer*    |   The page number you want to display.    |      5       | | `per_page`  |      NO       |    *integer*    | The number of orders to get per request.  |      2       | |    `from`     |      NO       |    *string*     |           From a specific date.           |  2017-08-12  | |     `to`      |      NO       |    *string*     |            To a specific date.            |  2017-09-12  |
@@ -15943,6 +15949,21 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
+     * Use this API to get the Remittance details of your Shiprocket account.
+     * @summary Get Remittence Info
+     * @param {string} [from] 
+     * @param {string} [to] 
+     * @param {number} [page] Page Number
+     * @param {number} [perPage] No of records in a single requests
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getRemittanceInfo(from?: string, to?: string, page?: number, perPage?: number, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getRemittanceInfo(from, to, page, perPage, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Get the order and shipment details of a particular order through this API by passing the Shiprocket order_id in the endpoint URL itself — type in your order_id in place of {id}.  No other body parameters are required.  **Note:**  For SRF orders, you\'ll receive an extra parameter viz., fulfillment_status. This key will have four values:  *   Ready to Pack,  *   Packed *   Added to Picklist *   Picked up         #### Path:  | **EXAMPLE** | | --- | | [https://apiv2.shiprocket.in/v1/external/orders/show/16167171](https://apiv2.shiprocket.in/v1/external/orders/show/16167171) |
      * @summary Get Specific Order Details
      * @param {string} id 
@@ -15999,20 +16020,6 @@ export class DefaultApi extends BaseAPI {
      */
     public search(queryString?: string, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).search(queryString, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Use this API to get the Remittance details of your Shiprocket account.
-     * @summary Get Remittence Info
-     * @param {string} contentType 
-     * @param {string} [from] 
-     * @param {string} [to] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public v1ExternalAccountDetailsRemittanceGet(contentType: string, from?: string, to?: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).v1ExternalAccountDetailsRemittanceGet(contentType, from, to, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

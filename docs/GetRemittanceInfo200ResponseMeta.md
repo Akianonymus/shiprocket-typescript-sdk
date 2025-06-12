@@ -1,4 +1,4 @@
-# V1ExternalAccountDetailsRemittanceGet200ResponseMeta
+# GetRemittanceInfo200ResponseMeta
 
 
 ## Properties
@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { V1ExternalAccountDetailsRemittanceGet200ResponseMeta } from './api';
+import { GetRemittanceInfo200ResponseMeta } from './api';
 
-const instance: V1ExternalAccountDetailsRemittanceGet200ResponseMeta = {
+const instance: GetRemittanceInfo200ResponseMeta = {
     remitance_count,
     pagination,
 };
